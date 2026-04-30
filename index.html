@@ -3,38 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LOVA — Inventory Ledger</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>LOVA — Enterprise Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     /* GLOBAL VARIABLES & STANDARDS */
     :root { 
-      --bg: #f0eee6; 
-      --surface: #ffffff;
-      --input-bg: #f9f8f6;
-      --border: #e4e2da; 
-      --border-dashed: #dcd9d0;
+      --bg: #f0eee6; --surface: #ffffff; --input-bg: #f9f8f6; 
+      --border: #e4e2da; --border-dashed: #dcd9d0;
       --navy: #1a1f2e; 
-      --green: #166534;
-      --green-soft: #dcfce7;
-      --green-border: #86efac;
-      --red: #d93025;
-      --red-soft: #fdf0ef;
-      --red-border: #f5c6c2;
-      --text-main: #1a1a1a; 
-      --text-muted: #737373; 
-      --text-kicker: #8c8c8c;
+      --green: #166534; --green-soft: #dcfce7; --green-border: #86efac;
+      --red: #d93025; --red-soft: #fdf0ef; --red-border: #f5c6c2;
+      --orange: #b45309; --orange-soft: #fef3c7; --orange-border: #fde68a;
+      --text-main: #1a1a1a; --text-muted: #737373; --text-kicker: #8c8c8c;
       
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-pill: 24px;
-      --h-input: 48px;
-      --h-btn: 52px;
+      --radius-sm: 8px; --radius-md: 12px; --radius-pill: 24px;
+      --h-input: 48px; --h-btn: 52px;
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Plus Jakarta Sans', sans-serif;}
-    body { background: var(--bg); min-height: 100vh; padding-bottom: 140px; color: var(--text-main); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif;}
+    body { background: var(--bg); min-height: 100vh; padding-bottom: 140px; color: var(--text-main); -webkit-tap-highlight-color: transparent;}
     
     /* TOP NAVIGATION */
     .top-nav { background: var(--navy); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
@@ -42,8 +29,8 @@
     .nav-wordmark { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 1.5px; }
     .nav-tag { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
     .nav-right { display: flex; align-items: center; gap: 16px; }
-    .nav-user { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;}
-    .btn-logout { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;}
+    .nav-user { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px;}
+    .btn-logout { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;}
     .btn-logout:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
     
     /* CORE LAYOUT */
@@ -53,30 +40,24 @@
     p.subtitle { color: var(--text-muted); font-size: 15px; font-weight: 500; }
 
     /* AUTHENTICATION VIEW */
-    #authSection { text-align: center; width: 100%; max-width: 380px; margin: 15vh auto; border-radius: var(--radius-md); padding: 48px 32px; background: var(--surface); box-shadow: 0 12px 40px rgba(0,0,0,0.04); box-sizing: border-box; }
+    #authSection { text-align: center; max-width: 380px; margin: 15vh auto; border-radius: var(--radius-md); padding: 48px 32px; background: var(--surface); box-shadow: 0 12px 40px rgba(0,0,0,0.04); }
     #passcode { width: 100%; text-align: center; font-size: 32px; letter-spacing: 16px; text-indent: 16px; font-weight: 700; padding: 12px; background: var(--input-bg); border: 2px solid var(--border); margin-bottom: 20px; border-radius: var(--radius-md); height: 64px; color: var(--text-main); outline: none; transition: 0.2s;}
     #passcode:focus { border-color: var(--navy); }
     #authError { color: var(--red); font-size: 13px; display: none; margin-top: 12px; font-weight: 600;}
 
     /* PERFECTED LOGIN BUTTON */
-    .btn-submit { 
-      max-width: 760px; width: 100%; height: var(--h-btn); 
-      background: var(--navy); color: #ffffff !important; 
-      border: none; border-radius: var(--radius-sm); 
-      font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; 
-      letter-spacing: 0.5px;
-      display: flex; align-items: center; justify-content: center; /* Locks text dead center */
-      margin: 0 auto;
-    }
+    .btn-submit { max-width: 760px; width: 100%; height: var(--h-btn); background: var(--navy); color: #ffffff !important; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; margin: 0 auto;}
     .btn-submit:active { transform: scale(0.98); }
-    .btn-submit:disabled { 
-      opacity: 0.8; cursor: not-allowed; 
-      background: var(--navy) !important; color: #ffffff !important; 
-    }
+    .btn-submit:disabled { opacity: 0.8; cursor: not-allowed; background: var(--navy) !important; color: #ffffff !important; }
 
-    /* APP VIEW & ROUTING GRID */
-    #appSection, #analyticsSection, #sharedNav { display: none; }
-    
+    /* HUB MENU */
+    #hubSection, #ledgerSection, #requestSection, #approvalSection, #analyticsSection, #sharedNav { display: none; }
+    .menu-grid { display: grid; gap: 12px; margin-top: 32px; }
+    .menu-btn { height: 76px; background: var(--surface); color: var(--text-main); border: 1px solid var(--border); font-size: 15px; font-weight: 600; display: flex; align-items: center; padding-left: 20px; border-radius: 10px; cursor: pointer; transition: 0.2s;}
+    .menu-btn:hover { border-color: var(--navy); transform: translateY(-2px);}
+    .menu-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--input-bg); display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 16px;}
+
+    /* ROUTING GRID & SEARCH */
     .flat-routing { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr); gap: 32px 64px; margin-bottom: 40px; }
     .routing-col { display: flex; flex-direction: column; justify-content: flex-end; position: relative;}
     .routing-label { font-size: 11px; color: var(--text-kicker); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;}
@@ -84,36 +65,49 @@
     .routing-select { cursor: pointer; color: var(--navy); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%231a1f2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'); background-repeat: no-repeat; background-position: right 0px center; }
     .routing-input:focus, .routing-select:focus, .routing-select:hover { border-color: var(--navy); }
 
-    /* SEARCH DROPDOWN & PREVIEW */
     .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-top: 8px; z-index: 50; max-height: 250px; overflow-y: auto; box-shadow: 0 12px 32px rgba(0,0,0,0.08); display: none;}
     .search-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid var(--input-bg); }
     .search-item:hover { background: var(--bg); }
     .search-item img { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border);}
     .search-item-text { font-size: 14px; font-weight: 600; }
 
-    .selected-preview { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 40px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,0.03);}
+    /* CARD COMPONENTS */
+    .selected-preview { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 40px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,0.03); flex-wrap: wrap;}
     .selected-preview img { width: 56px; height: 56px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border);}
-    .preview-name { font-size: 16px; font-weight: 700; flex: 1; }
-    .preview-unit { font-size: 12px; font-weight: 700; color: var(--text-muted); background: var(--input-bg); padding: 4px 10px; border-radius: 6px; text-transform: uppercase;}
+    .preview-name { font-size: 16px; font-weight: 700; flex: 1; min-width: 200px;}
     .qty-input { width: 88px; height: var(--h-input); text-align: center; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 18px; font-weight: 700; background-color: var(--input-bg); color: var(--navy); outline: none; transition: 0.2s;}
     .qty-input:focus { background-color: var(--surface); border-color: var(--border-dashed); box-shadow: 0 0 0 3px rgba(26,31,46,0.04); }
-    .btn-add { background: var(--navy); color: #fff; border: none; height: var(--h-input); border-radius: var(--radius-sm); font-weight: 700; font-size: 14px; padding: 0 32px; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px;}
+    .btn-add { background: var(--navy); color: #fff; border: none; height: var(--h-input); border-radius: var(--radius-sm); font-weight: 700; font-size: 14px; padding: 0 32px; cursor: pointer; transition: 0.2s;}
+    .btn-add:active { transform: scale(0.96); }
 
-    /* STAGING AREA */
+    /* STANDARDIZED STAGING AREA (Card-style with photo & pill) */
     .section-pill { display: inline-flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 6px 16px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--navy); margin-bottom: 16px; text-transform: uppercase;}
     .staged-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.02);}
-    .staged-indicator { width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; border: 1px solid transparent;}
+    .staged-indicator { width: 36px; height: 36px; min-width:36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; border: 1px solid transparent;}
     .indicator-minus { background: var(--red-soft); color: var(--red); border-color: var(--red-border); }
     .indicator-plus { background: var(--green-soft); color: var(--green); border-color: var(--green-border); }
+    .indicator-cart { background: var(--navy); color: white; border-color: var(--navy); font-size: 14px;}
     .indicator-audit { background: var(--input-bg); color: var(--navy); border-color: var(--border); font-size: 14px;}
-    .staged-thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); background: var(--input-bg);}
-    .staged-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-    .staged-name { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.2;}
-    .staged-meta { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
-    .staged-qty-box { display: flex; align-items: baseline; gap: 4px; background: var(--input-bg); padding: 8px 16px; border-radius: var(--radius-sm); }
-    .staged-val { font-size: 16px; font-weight: 800; color: var(--navy); }
-    .staged-uom { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;}
-    .btn-remove { color: var(--text-kicker); font-size: 20px; font-weight: 400; background: transparent; border: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; line-height: 1;}
+    
+    .staged-photo { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); background: var(--input-bg);}
+    .staged-name { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.2; flex: 1;}
+    .data-pill { display: flex; align-items: baseline; gap: 4px; background: var(--navy); padding: 8px 16px; border-radius: var(--radius-sm); color: white; font-size: 16px; font-weight: 800;}
+    
+    .btn-remove { color: var(--text-kicker); font-size: 20px; background: transparent; border: none; cursor: pointer; padding: 4px 8px; }
+    .btn-remove:hover { color: var(--red); }
+
+    /* ORDER APPROVAL CARDS */
+    .order-batch { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.03);}
+    .batch-head { padding: 16px 20px; background: var(--input-bg); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;}
+    .batch-id { font-size: 14px; font-weight: 800; font-family: monospace;}
+    .batch-meta { font-size: 12px; color: var(--text-muted); font-weight: 600;}
+    .order-item-row { padding: 16px 20px; border-bottom: 1px dashed var(--border-dashed); display: flex; gap: 16px; align-items: center;}
+    .order-item-row:last-child { border-bottom: none;}
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase;}
+    .status-pending { background: var(--orange-soft); color: var(--orange); border: 1px solid var(--orange-border); }
+    .action-btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1px solid var(--border); background: var(--surface); transition: 0.2s;}
+    .btn-approve { color: var(--green); border-color: var(--green-border); } .btn-approve:hover { background: var(--green-soft); }
+    .btn-reject { color: var(--red); border-color: var(--red-border); } .btn-reject:hover { background: var(--red-soft); }
 
     /* STICKY BOTTOM */
     .sticky-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(244,243,240,0.95); backdrop-filter: blur(12px); padding: 20px 24px 32px; border-top: 1px solid var(--border); z-index: 100; display: flex; flex-direction: column; align-items: center;}
@@ -127,36 +121,24 @@
     .modal-sheet { background: var(--bg); width: 100%; max-width: 760px; border-radius: 20px 20px 0 0; padding: 32px 24px 40px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); max-height: 85vh; display: flex; flex-direction: column; }
     .modal-overlay.open .modal-sheet { transform: translateY(0); }
     .modal-list { overflow-y: auto; flex: 1; margin: 24px 0; padding-right: 4px;}
-    
-    .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--border-dashed);}
-    .summary-item:last-child { border-bottom: none; }
-    .summary-name { font-size: 15px; font-weight: 700; color: var(--text-main); }
-    .summary-meta { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-    .summary-qty { font-size: 16px; font-weight: 800; color: var(--navy); }
-
-    .alert-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px;}
-    .alert-badge { background: var(--red-soft); color: var(--red); border: 1px solid var(--red-border); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px;}
-
-    /* ANALYTICS DASHBOARD CSS */
-    .stat-hero { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--navy); margin: 16px 0 32px 0; text-align: center;}
-    .chart-row { margin-bottom: 16px; }
-    .chart-label-bar { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px;}
-    .chart-track { width: 100%; height: 16px; background: var(--input-shaded); border-radius: 8px; overflow: hidden;}
-    .chart-fill { height: 100%; background: var(--red); border-radius: 8px; transition: width 1s ease-out;}
-    
-    .top-offender-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
-    .offender-name { font-size: 14px; font-weight: 700;}
-    .offender-qty { font-size: 14px; font-weight: 700; color: var(--red); background: var(--red-soft); padding: 4px 10px; border-radius: 6px;}
 
     /* UTILITIES */
     .loading-text { text-align: center; color: var(--text-muted); font-size: 15px; margin-top: 40px; padding: 40px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); font-weight: 600;}
     .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); width: 100%; height: var(--h-btn); border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s;}
     .btn-secondary:hover { background: var(--surface); }
-    .btn-hub-action { background: white; color: var(--navy); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; margin: 0 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);}
-    .btn-hub-action:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .btn-back { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: 0.2s; display: inline-flex;}
+    .btn-back:hover { background: var(--surface); color: var(--text-main); }
     
     .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--navy); color: white; padding: 14px 28px; border-radius: 30px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1000; box-shadow: 0 8px 24px rgba(26,31,46,0.3);}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ANALYTICS CSS */
+    .stat-hero { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--navy); margin: 16px 0 32px 0; text-align: center;}
+    .chart-row { margin-bottom: 16px; }
+    .chart-label-bar { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px;}
+    .chart-track { width: 100%; height: 16px; background: var(--input-shaded); border-radius: 8px; overflow: hidden;}
+    .chart-fill { height: 100%; background: var(--red); border-radius: 8px;}
+    .top-offender-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
 
     @media (max-width: 650px) { .flat-routing { grid-template-columns: 1fr; gap: 24px; } }
   </style>
@@ -165,136 +147,140 @@
 
   <!-- TOP NAVIGATION -->
   <nav class="top-nav" id="sharedNav">
-    <div class="nav-left">
-      <div class="nav-wordmark">LOVA</div>
-      <div class="nav-tag">Ledger</div>
-    </div>
-    <div class="nav-right">
-      <div class="nav-user" id="displayUser"></div>
-      <button class="btn-logout" onclick="logout()">Logout</button>
-    </div>
+    <div class="nav-left"><div class="nav-wordmark">LOVA</div><div class="nav-tag">Enterprise</div></div>
+    <div class="nav-right"><div class="nav-user" id="displayUser"></div><button class="btn-logout" onclick="logout()">Logout</button></div>
   </nav>
 
   <!-- LOGIN MODULE -->
   <div id="authSection" class="container" style="display: block;">
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 20px auto; display: block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    <h2>Ledger Access</h2>
-    <p class="subtitle" style="margin-bottom: 32px;">Enter PIN to securely access your branch</p>
+    <h2>System Access</h2>
+    <p class="subtitle" style="margin-bottom: 32px;">Enter PIN to securely access the portal</p>
     <input type="password" id="passcode" maxlength="4" placeholder="••••" autocomplete="off" onkeypress="handleEnter(event)" inputmode="numeric">
     <p id="authError">Incorrect PIN. Please try again.</p>
     <button onclick="authenticate()" class="btn-submit" id="loginBtn">Secure Login</button>
   </div>
 
-  <!-- MAIN APP MODULE -->
-  <div id="appSection">
-    <div class="container">
-      <div class="header-area">
-        <h2>Ledger Entry</h2>
-        <p class="subtitle" id="branchDisplay" style="margin-bottom: 16px;">Location: HQ</p>
-        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-          <button class="btn-hub-action" onclick="showAnalytics()">📊 View Global Analytics</button>
-          <button id="adminAlertBtn" class="btn-hub-action" style="display: none;" onclick="openAlertsModal()">🚨 Restock Alerts</button>
-        </div>
+  <!-- HUB MENU -->
+  <div id="hubSection" class="container">
+    <div class="header-area">
+      <h2>LOVA Hub</h2>
+      <p class="subtitle" id="hubBranchName">Location</p>
+    </div>
+    <div class="menu-grid">
+      <button class="menu-btn" onclick="openView('requestSection')"><div class="menu-icon">🛒</div> Request Procurement</button>
+      <button class="menu-btn" onclick="openView('ledgerSection')"><div class="menu-icon">⚡</div> Live Ledger (Stock/Wastage)</button>
+      <button class="menu-btn" onclick="openView('analyticsSection')"><div class="menu-icon">📊</div> Global Analytics</button>
+      <button class="menu-btn" id="adminApprovalBtn" style="display: none; border-color: var(--navy);" onclick="openView('approvalSection')"><div class="menu-icon">📝</div> Admin: Approval Center</button>
+    </div>
+  </div>
+
+  <!-- LEDGER MODULE (Wastage / Intake) -->
+  <div id="ledgerSection" class="container">
+    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Ledger Entry</h2><p class="subtitle">Direct stock updates.</p></div>
+    <div class="flat-routing">
+      <div class="routing-col">
+        <label class="routing-label">Section</label>
+        <select id="logSection" class="routing-select" onchange="clearSelection()"><option value="KITCHEN">Kitchen</option><option value="BAR">Bar</option><option value="SERVICE">Service</option></select>
       </div>
-
-      <!-- FLAT ROUTING -->
-      <div class="flat-routing">
-        <div class="routing-col">
-          <label class="routing-label">Section</label>
-          <select id="logSection" class="routing-select" onchange="clearSelection()">
-            <option value="KITCHEN">Kitchen</option>
-            <option value="BAR">Bar</option>
-            <option value="SERVICE">Service</option>
-            <option value="CASHIER">Cashier</option>
-          </select>
-        </div>
-        <div class="routing-col">
-          <label class="routing-label">Transaction</label>
-          <select id="transType" class="routing-select">
-            <option value="WASTAGE">- Report Broken</option>
-          </select>
-        </div>
-        <div class="routing-col" style="grid-column: 1 / -1;">
-          <label class="routing-label">Item Search</label>
-          <input type="text" id="itemSearch" class="routing-input" placeholder="Search exact item..." onkeyup="handleSearch()" autocomplete="off">
-          <div id="searchDropdown" class="search-dropdown"></div>
-        </div>
+      <div class="routing-col">
+        <label class="routing-label">Transaction</label>
+        <select id="transType" class="routing-select"><option value="WASTAGE">- Report Broken</option></select>
       </div>
-
-      <!-- PREVIEW & STAGING -->
-      <div id="selectedPreview" class="selected-preview" style="display: none;">
-        <img id="selPic" src="">
-        <div class="preview-name" id="selName">Item Name</div>
-        <div class="preview-unit" id="selUnit">PCS</div>
-        <input type="number" id="selQty" class="qty-input" placeholder="QTY" inputmode="numeric">
-        <button class="btn-add" onclick="stageItem()">ADD</button>
-      </div>
-
-      <div id="stagingArea" style="margin-bottom: 24px;"></div>
-
-      <div class="sticky-bottom">
-        <div class="grand-total-bar">
-          <div class="grand-total-label">Items in Batch</div>
-          <div class="grand-total-value" id="batchCountDisplay">0</div>
-        </div>
-        <button type="button" class="btn-submit" onclick="openSummaryModal()">Review & Submit Ledger</button>
+      <div class="routing-col" style="grid-column: 1 / -1;">
+        <label class="routing-label">Item Search</label>
+        <input type="text" id="itemSearch" class="routing-input" placeholder="Search exact item..." onkeyup="handleSearch('itemSearch', 'logSection', 'searchDropdown')" autocomplete="off">
+        <div id="searchDropdown" class="search-dropdown"></div>
       </div>
     </div>
+    <div id="selectedPreview" class="selected-preview" style="display: none;">
+      <img id="selPic" src=""><div class="preview-name" id="selName">Item Name</div>
+      <input type="number" id="selQty" class="qty-input" placeholder="QTY">
+      <button class="btn-add" onclick="stageItem('ledger')">ADD</button>
+    </div>
+    <div id="stagingArea" style="margin-bottom: 24px;"></div>
+    <div class="sticky-bottom">
+      <div class="grand-total-bar"><div class="grand-total-label">Items in Batch</div><div class="grand-total-value" id="batchCountDisplay">0</div></div>
+      <button type="button" class="btn-submit" onclick="openSummaryModal('ledger')">Review & Submit Ledger</button>
+    </div>
+  </div>
+
+  <!-- PROCUREMENT REQUEST MODULE -->
+  <div id="requestSection" class="container">
+    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Request Items</h2><p class="subtitle">Procurement authorization.</p></div>
+    <div class="flat-routing">
+      <div class="routing-col">
+        <label class="routing-label">Section</label>
+        <select id="reqSection" class="routing-select" onchange="clearReqSelection()"><option value="KITCHEN">Kitchen</option><option value="BAR">Bar</option><option value="SERVICE">Service</option></select>
+      </div>
+      <div class="routing-col" style="grid-column: 1 / -1;">
+        <label class="routing-label">Item Search</label>
+        <input type="text" id="reqItemSearch" class="routing-input" placeholder="Search catalog..." onkeyup="handleSearch('reqItemSearch', 'reqSection', 'reqSearchDropdown')" autocomplete="off">
+        <div id="reqSearchDropdown" class="search-dropdown"></div>
+      </div>
+    </div>
+    <div id="reqSelectedPreview" class="selected-preview" style="display: none; flex-direction: column; align-items: stretch;">
+      <div style="display: flex; gap: 16px; align-items: center; width: 100%;">
+        <img id="reqSelPic" src=""><div class="preview-name" id="reqSelName">Item Name</div>
+        <input type="number" id="reqSelQty" class="qty-input" placeholder="QTY">
+      </div>
+      <input type="text" id="reqReason" class="routing-input" placeholder="Required: Reason for order..." style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-weight: 500; height: auto;">
+      <button class="btn-add" style="width: 100%;" onclick="stageItem('request')">ADD TO CART</button>
+    </div>
+    <div id="reqStagingArea" style="margin-bottom: 24px;"></div>
+    <div class="sticky-bottom">
+      <div class="grand-total-bar"><div class="grand-total-label">Cart Items</div><div class="grand-total-value" id="reqBatchCountDisplay">0</div></div>
+      <button type="button" class="btn-submit" style="background: var(--navy);" onclick="openSummaryModal('request')">Review & Send Request</button>
+    </div>
+  </div>
+
+  <!-- ADMIN APPROVAL CENTER -->
+  <div id="approvalSection" class="container">
+    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Approval Center</h2><p class="subtitle">Review pending requests.</p></div>
+    <div id="approvalContainer"><div class="loading-text">Loading Orders...</div></div>
   </div>
 
   <!-- ANALYTICS DASHBOARD -->
-  <div id="analyticsSection" style="display: none;">
-    <div class="container">
-      <div class="header-area">
-        <button class="btn-back" style="background: transparent; border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 24px;" onclick="closeAnalytics()">← Back to Ledger</button>
-        <h2>Global Analytics</h2>
-        <p class="subtitle">Real-time financial wastage & metrics</p>
-      </div>
-      <div id="analyticsContainer"></div>
-    </div>
+  <div id="analyticsSection" class="container">
+    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Global Analytics</h2></div>
+    <div id="analyticsContainer"><div class="loading-text">Loading Data...</div></div>
   </div>
 
-  <!-- SUMMARY MODAL -->
+  <!-- SUMMARY MODAL (Used for both Ledger & Requests) -->
   <div class="modal-overlay" id="summaryModal">
     <div class="modal-sheet">
-      <h2 style="font-size: 28px; margin-bottom: 4px;">Confirm Transaction</h2>
-      <p class="subtitle">Please verify these items before pushing to the live ledger.</p>
+      <h2 style="font-size: 28px; margin-bottom: 4px;">Confirm Batch</h2>
+      <p class="subtitle">Please verify before submitting.</p>
       <div class="modal-list" id="summaryContainer"></div>
       <div style="display: flex; gap: 16px; margin-top: 16px;">
         <button class="btn-secondary" style="flex: 1;" onclick="closeSummaryModal()">Cancel</button>
-        <button class="btn-submit" id="finalPushBtn" style="flex: 2; background: var(--green);" onclick="executeLedgerPush()">Confirm & Push</button>
+        <button class="btn-submit" id="finalPushBtn" style="flex: 2; background: var(--green);" onclick="executePush()">Confirm & Send</button>
       </div>
     </div>
   </div>
 
-  <!-- ALERTS MODAL -->
-  <div class="modal-overlay" id="alertsModal">
-    <div class="modal-sheet">
-      <h2 style="font-size: 28px; margin-bottom: 4px;">Restock Alerts</h2>
-      <p class="subtitle">Live calculations based on current Ledger math.</p>
-      <div class="modal-list" id="alertsContainer"></div>
-      <button class="btn-secondary" style="margin-top: 16px;" onclick="closeAlertsModal()">Close Panel</button>
-    </div>
-  </div>
-
-  <div class="toast" id="sysToast">Transaction Logged Successfully</div>
+  <div class="toast" id="sysToast">Success</div>
 
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxPRS-2xn5jSxgxqSCeR-q-tYRabyzK_mjt9d2C9IEc_CLQDDL_Cu0zS3AWrJcguzdM/exec"; 
-    let currentUser = null; let masterInventory = []; let stagedItems = []; let activeSelection = null; 
+    let currentUser = null; let masterInventory = []; let stagedItems = []; let reqStagedItems = []; let activeSelection = null; 
+    let currentMode = 'ledger'; 
 
     function handleEnter(e) { if(e.key === 'Enter') authenticate(); }
     function showToast(msg) { const t = document.getElementById('sysToast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
 
-    // 1. AUTHENTICATION
+    function openView(viewId) {
+      ['hubSection', 'ledgerSection', 'requestSection', 'approvalSection', 'analyticsSection'].forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById(viewId).style.display = 'block'; window.scrollTo(0,0);
+      if(viewId === 'approvalSection') loadApprovals();
+      if(viewId === 'analyticsSection') loadAnalyticsData();
+    }
+
     async function authenticate() {
       const pin = document.getElementById('passcode').value.trim();
       const btn = document.getElementById('loginBtn');
-      const errorMsg = document.getElementById('authError');
       if(pin.length !== 4) return;
-
-      btn.disabled = true; btn.innerText = "Authenticating..."; errorMsg.style.display = 'none';
-
+      btn.disabled = true; btn.innerText = "Authenticating..."; 
       try {
         const res = await fetch(GAS_API_URL + "?action=get_users").then(r => r.json());
         if (res.status === 'success') {
@@ -302,106 +288,98 @@
           if (user) {
             currentUser = { name: user.Name, branch: user.Branch_Name, role: user.Role };
             document.getElementById('displayUser').innerText = `${user.Name} • ${user.Branch_Name}`;
-            document.getElementById('branchDisplay').innerText = `Location: ${user.Branch_Name}`;
+            document.getElementById('hubBranchName').innerText = user.Branch_Name;
             
-            const typeSelect = document.getElementById('transType');
             if(user.Role === 'Admin') {
-              document.getElementById('adminAlertBtn').style.display = 'inline-block';
-              typeSelect.innerHTML = `<option value="WASTAGE">- Report Broken</option><option value="RESTOCK">+ Stock Intake</option><option value="STOCKTAKE">⟳ Full Audit / Reset</option>`;
-            } else { typeSelect.innerHTML = `<option value="WASTAGE">- Report Broken</option>`; }
-            
+              document.getElementById('adminApprovalBtn').style.display = 'flex';
+              document.getElementById('transType').innerHTML = `<option value="WASTAGE">- Report Broken</option><option value="RESTOCK">+ Stock Intake</option><option value="STOCKTAKE">⟳ Full Audit / Reset</option>`;
+            }
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('sharedNav').style.display = 'flex';
-            document.getElementById('appSection').style.display = 'block';
-            
-            fetchMaster(); 
-          } else { errorMsg.style.display = 'block'; }
+            openView('hubSection'); fetchMaster(); 
+          } else document.getElementById('authError').style.display = 'block';
         }
-      } catch (err) { errorMsg.innerText = "Network Error."; errorMsg.style.display = 'block'; } 
-      finally { btn.disabled = false; btn.innerText = "Secure Login"; document.getElementById('passcode').value = ''; }
+      } catch (err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Secure Login"; document.getElementById('passcode').value = ''; }
     }
 
-    function logout() {
-      currentUser = null; stagedItems = []; renderStagingArea();
-      ['appSection','analyticsSection','sharedNav'].forEach(id => document.getElementById(id).style.display = 'none');
-      document.getElementById('authSection').style.display = 'block';
-    }
+    function logout() { location.reload(); }
+    async function fetchMaster() { const res = await fetch(GAS_API_URL + "?action=get_master").then(r => r.json()); if(res.status === 'success') masterInventory = res.data; }
 
-    async function fetchMaster() {
-      try {
-        const res = await fetch(GAS_API_URL + "?action=get_master").then(r => r.json());
-        if(res.status === 'success') masterInventory = res.data;
-      } catch(err) { console.log("Failed to fetch master."); }
-    }
-
-    // 2. LEDGER STAGING LOGIC
-    function handleSearch() {
-      const query = document.getElementById('itemSearch').value.toLowerCase();
-      const section = document.getElementById('logSection').value;
-      const dropdown = document.getElementById('searchDropdown');
-      
+    // SEARCH LOGIC
+    function handleSearch(inputId, sectionId, dropId) {
+      const query = document.getElementById(inputId).value.toLowerCase();
+      const section = document.getElementById(sectionId).value;
+      const dropdown = document.getElementById(dropId);
       if(query.length < 2) { dropdown.style.display = 'none'; return; }
-      
-      const filtered = masterInventory.filter(i => (i.SECTION || '').toUpperCase() === section && (i.ITEM_NAME || '').toLowerCase().includes(query)).slice(0, 5);
+      const filtered = masterInventory.filter(i => (i.SECTION||'').toUpperCase() === section && (i.ITEM_NAME||'').toLowerCase().includes(query)).slice(0,5);
       if(filtered.length === 0) { dropdown.style.display = 'none'; return; }
-
-      dropdown.innerHTML = filtered.map(item => `
-        <div class="search-item" onclick='selectItem(${JSON.stringify(item).replace(/'/g, "&#39;")})'>
-          <img src="${item.URL || 'https://via.placeholder.com/32'}">
-          <div class="search-item-text">${item.ITEM_NAME}</div>
-        </div>
-      `).join('');
+      dropdown.innerHTML = filtered.map(item => `<div class="search-item" onclick='selectItem(${JSON.stringify(item).replace(/'/g, "&#39;")}, "${inputId}")'><img src="${item.URL || 'https://via.placeholder.com/32'}"><div class="search-item-text">${item.ITEM_NAME}</div></div>`).join('');
       dropdown.style.display = 'block';
     }
 
-    function selectItem(item) {
+    function selectItem(item, sourceInputId) {
       activeSelection = item;
-      document.getElementById('itemSearch').value = ''; document.getElementById('searchDropdown').style.display = 'none';
-      document.getElementById('selPic').src = item.URL || 'https://via.placeholder.com/56';
-      document.getElementById('selName').innerText = item.ITEM_NAME;
-      document.getElementById('selUnit').innerText = item.UNIT;
-      document.getElementById('selQty').value = '';
-      document.getElementById('selectedPreview').style.display = 'flex';
-      document.getElementById('selQty').focus();
+      if(sourceInputId === 'itemSearch') {
+        document.getElementById('itemSearch').value = ''; document.getElementById('searchDropdown').style.display = 'none';
+        document.getElementById('selPic').src = item.URL || ''; document.getElementById('selName').innerText = item.ITEM_NAME;
+        document.getElementById('selectedPreview').style.display = 'flex'; document.getElementById('selQty').focus();
+      } else {
+        document.getElementById('reqItemSearch').value = ''; document.getElementById('reqSearchDropdown').style.display = 'none';
+        document.getElementById('reqSelPic').src = item.URL || ''; document.getElementById('reqSelName').innerText = item.ITEM_NAME;
+        document.getElementById('reqSelectedPreview').style.display = 'flex'; document.getElementById('reqSelQty').focus();
+      }
     }
 
-    function clearSelection() {
-      activeSelection = null; document.getElementById('selectedPreview').style.display = 'none'; document.getElementById('itemSearch').value = '';
-    }
+    function clearSelection() { activeSelection = null; document.getElementById('selectedPreview').style.display = 'none'; document.getElementById('itemSearch').value = ''; }
+    function clearReqSelection() { activeSelection = null; document.getElementById('reqSelectedPreview').style.display = 'none'; document.getElementById('reqItemSearch').value = ''; }
 
-    function stageItem() {
+    function stageItem(mode) {
       if(!activeSelection) return;
-      const qty = parseFloat(document.getElementById('selQty').value);
-      if(!qty || qty <= 0) return alert("Enter a valid quantity.");
-      const transType = document.getElementById('transType').value;
-      const tLabel = document.getElementById('transType').options[document.getElementById('transType').selectedIndex].text;
-      
-      stagedItems.push({ ...activeSelection, transType: transType, transLabel: tLabel, count: qty });
-      clearSelection(); renderStagingArea();
+      const qtyId = mode === 'ledger' ? 'selQty' : 'reqSelQty';
+      const qty = parseFloat(document.getElementById(qtyId).value);
+      if(!qty || qty <= 0) return alert("Enter valid qty.");
+
+      if(mode === 'ledger') {
+        const tType = document.getElementById('transType').value;
+        const tLabel = document.getElementById('transType').options[document.getElementById('transType').selectedIndex].text;
+        stagedItems.push({ ...activeSelection, transType: tType, transLabel: tLabel, count: qty });
+        clearSelection(); renderStagingArea('ledger');
+      } else {
+        const reason = document.getElementById('reqReason').value.trim();
+        if(!reason) return alert("Reason is required for procurement requests.");
+        reqStagedItems.push({ ...activeSelection, reason: reason, count: qty });
+        clearReqSelection(); document.getElementById('reqReason').value = ''; renderStagingArea('request');
+      }
     }
 
-    function renderStagingArea() {
-      const container = document.getElementById('stagingArea'); container.innerHTML = '';
-      document.getElementById('batchCountDisplay').innerText = stagedItems.length;
+    // UNIFIED CARD RENDERING FOR STAGING
+    function renderStagingArea(mode) {
+      const arr = mode === 'ledger' ? stagedItems : reqStagedItems;
+      const containerId = mode === 'ledger' ? 'stagingArea' : 'reqStagingArea';
+      const countId = mode === 'ledger' ? 'batchCountDisplay' : 'reqBatchCountDisplay';
+      
+      const container = document.getElementById(containerId); container.innerHTML = '';
+      document.getElementById(countId).innerText = arr.length;
 
-      const sections = [...new Set(stagedItems.map(i => i.SECTION))];
+      const sections = [...new Set(arr.map(i => i.SECTION))];
       sections.forEach(sec => {
-        const itemsInSection = stagedItems.filter(i => i.SECTION === sec);
         let html = `<div class="section-pill">${sec}</div>`;
-        
-        itemsInSection.forEach(item => {
-          const globalIndex = stagedItems.indexOf(item);
-          let iconClass = 'indicator-audit'; let iconText = '⟳';
-          if(item.transType === 'WASTAGE') { iconClass = 'indicator-minus'; iconText = '-'; }
-          else if(item.transType === 'RESTOCK') { iconClass = 'indicator-plus'; iconText = '+'; }
+        arr.filter(i => i.SECTION === sec).forEach((item) => {
+          const idx = arr.indexOf(item);
+          let icon = mode === 'ledger' ? 
+            (item.transType === 'WASTAGE' ? '<div class="staged-indicator indicator-minus">-</div>' : 
+            (item.transType === 'RESTOCK' ? '<div class="staged-indicator indicator-plus">+</div>' : '<div class="staged-indicator indicator-audit">⟳</div>')) 
+            : '<div class="staged-indicator indicator-cart">🛒</div>';
+          
+          let meta = mode === 'ledger' ? item.transLabel : `Reason: ${item.reason}`;
           
           html += `
             <div class="staged-card">
-              <div class="staged-indicator ${iconClass}">${iconText}</div>
-              <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb">
-              <div class="staged-info"><div class="staged-name">${item.ITEM_NAME}</div><div class="staged-meta">${item.transLabel}</div></div>
-              <div class="staged-qty-box"><span class="staged-val">${item.count}</span><span class="staged-uom">${item.UNIT}</span></div>
-              <button class="btn-remove" onclick="removeStaged(${globalIndex})">✕</button>
+              ${icon}
+              <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-photo">
+              <div class="staged-name">${item.ITEM_NAME}</div>
+              <div class="data-pill" style="margin-left:auto;">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7);">${item.UNIT}</span></div>
+              <button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button>
             </div>
           `;
         });
@@ -409,115 +387,102 @@
       });
     }
 
-    function removeStaged(index) { stagedItems.splice(index, 1); renderStagingArea(); }
+    function removeStaged(mode, index) { if(mode === 'ledger') stagedItems.splice(index, 1); else reqStagedItems.splice(index, 1); renderStagingArea(mode); }
 
-    function openSummaryModal() {
-      if(stagedItems.length === 0) return alert("Please add items to your batch first.");
-      document.getElementById('summaryContainer').innerHTML = stagedItems.map(i => `
-        <div class="summary-item">
-          <div style="display:flex; flex-direction:column; gap:4px;"><div class="summary-name">${i.ITEM_NAME}</div><div class="summary-meta">${i.transLabel}</div></div>
-          <div class="summary-qty">${i.count} <span style="font-size:11px; color:var(--text-muted);">${i.UNIT}</span></div>
-        </div>
-      `).join('');
+    // UNIFIED SUMMARY MODAL
+    function openSummaryModal(mode) {
+      currentMode = mode;
+      const arr = mode === 'ledger' ? stagedItems : reqStagedItems;
+      if(arr.length === 0) return alert("Batch empty.");
+      
+      const container = document.getElementById('summaryContainer');
+      container.innerHTML = '';
+      const sections = [...new Set(arr.map(i => i.SECTION))];
+      
+      sections.forEach(sec => {
+        const itemsInSection = arr.filter(i => i.SECTION === sec);
+        let html = `<div class="section-pill">${sec}</div>`;
+        
+        itemsInSection.forEach(item => {
+          let typeStr = mode === 'ledger' ? (item.transType === 'WASTAGE' ? 'Broken' : (item.transType === 'RESTOCK' ? 'Intake' : 'Audit')) : 'Request';
+          html += `
+            <div class="staged-card" style="box-shadow: none; border-color: var(--input-bg);">
+              <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-photo">
+              <div class="staged-name" style="flex: 1;">${item.ITEM_NAME}</div>
+              <div style="font-size: 13px; font-weight: 700; color:var(--text-muted);">${typeStr}</div>
+              <div class="data-pill" style="margin-left: 12px;">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7);">${item.UNIT}</span></div>
+            </div>
+          `;
+        });
+        container.innerHTML += html;
+      });
       document.getElementById('summaryModal').classList.add('open');
     }
 
     function closeSummaryModal() { document.getElementById('summaryModal').classList.remove('open'); }
 
-    async function executeLedgerPush() {
-      const btn = document.getElementById('finalPushBtn');
-      btn.disabled = true; btn.innerText = "Pushing to Ledger...";
+    async function executePush() {
+      const btn = document.getElementById('finalPushBtn'); btn.disabled = true; btn.innerText = "Encrypting & Sending...";
+      const arr = currentMode === 'ledger' ? stagedItems : reqStagedItems;
+      const act = currentMode === 'ledger' ? 'submit_count' : 'submit_order';
 
-      const payload = {
-        action: 'submit_count', branch: currentUser.branch, staff: currentUser.name, timestamp: new Date().toISOString(), 
-        data: stagedItems.map(i => ({ code: i.CODE, name: i.ITEM_NAME, count: i.count, unit: i.UNIT, section: i.SECTION, transType: i.transType }))
-      };
+      const payload = { action: act, branch: currentUser.branch, staff: currentUser.name, timestamp: new Date().toISOString(), data: arr.map(i => ({ code: i.CODE, name: i.ITEM_NAME, count: i.count, unit: i.UNIT, section: i.SECTION, transType: i.transType || '', reason: i.reason || '' })) };
 
       try {
         const res = await fetch(GAS_API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json());
         if(res.status === 'success') { 
-          closeSummaryModal(); showToast(`Success! ${stagedItems.length} transactions logged.`); stagedItems = []; renderStagingArea();
+          closeSummaryModal(); showToast(`Success! Logged.`); 
+          if(currentMode === 'ledger') { stagedItems = []; renderStagingArea('ledger'); } else { reqStagedItems = []; renderStagingArea('request'); }
         } else alert("Error: " + res.message);
-      } catch(err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Confirm & Push"; }
+      } catch(err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Confirm & Send"; }
     }
 
-    // 3. ANALYTICS & ALERTS MODALS
-    function openAlertsModal() { document.getElementById('alertsModal').classList.add('open'); loadAlertsData(); }
-    function closeAlertsModal() { document.getElementById('alertsModal').classList.remove('open'); }
-
-    async function loadAlertsData() {
-      const c = document.getElementById('alertsContainer'); c.innerHTML = '<div class="loading-text">Calculating Live Ledger Math...</div>';
+    // APPROVAL CENTER (Admin)
+    async function loadApprovals() {
+      const c = document.getElementById('approvalContainer'); c.innerHTML = '<div class="loading-text">Fetching pending orders...</div>';
       try {
-        const res = await fetch(GAS_API_URL + "?action=get_live_stock&branch=" + encodeURIComponent(currentUser.branch)).then(r => r.json());
+        const res = await fetch(GAS_API_URL + "?action=get_orders").then(r => r.json());
         if(res.status === 'success') {
-          if(res.alerts.length === 0) { c.innerHTML = '<div class="loading-text" style="color:var(--green);">All stock levels are optimal!</div>'; return; }
-          c.innerHTML = res.alerts.map(a => `
-            <div class="alert-card">
-              <img src="${a.url || 'https://via.placeholder.com/60'}" style="width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid var(--border);">
-              <div style="flex:1;">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;"><div style="font-weight:700; font-size:15px;">${a.name}</div><div class="alert-badge">LOW</div></div>
-                <div style="font-size:13px; font-weight:600; color:var(--text-muted);">Stock: <span style="color:var(--red); font-size:15px;">${a.currentStock}</span> ${a.unit} (Min: ${a.minStock})</div>
-              </div>
-            </div>
-          `).join('');
+          const pending = res.data.filter(o => o.STATUS === 'PENDING');
+          if(pending.length === 0) { c.innerHTML = '<div class="loading-text" style="color:var(--green);">No pending orders.</div>'; return; }
+          
+          const grouped = {}; pending.forEach(o => { if(!grouped[o.ORDER_ID]) grouped[o.ORDER_ID] = []; grouped[o.ORDER_ID].push(o); });
+          let html = '';
+          for(const [id, items] of Object.entries(grouped)) {
+            html += `<div class="order-batch" id="batch-${id}"><div class="batch-head"><div><div class="batch-id">${id}</div><div class="batch-meta">${items[0].BRANCH} • ${items[0].STAFF_NAME}</div></div></div>`;
+            items.forEach(req => {
+              html += `<div class="order-item-row" id="row-${id}-${req.ITEM_CODE}"><div style="flex:1;"><div style="font-weight:700; font-size:15px; margin-bottom:4px;">${req.ITEM_NAME} <span class="status-badge status-pending">PENDING</span></div><div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Req: <span style="font-weight:800; color:var(--navy);">${req.QTY} ${req.UNIT}</span></div><div style="font-size:12px; font-style:italic;">"${req.REASON}"</div></div><div style="display:flex; flex-direction:column; gap:8px;"><button class="action-btn-sm btn-approve" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'APPROVED')">Approve</button><button class="action-btn-sm btn-reject" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'REJECTED')">Reject</button></div></div>`;
+            });
+            html += `</div>`;
+          }
+          c.innerHTML = html;
         }
-      } catch(err) { c.innerHTML = '<div class="loading-text" style="color:var(--red);">Failed to calculate ledger.</div>'; }
+      } catch(e) { c.innerHTML = '<div class="loading-text">Error loading orders.</div>'; }
     }
 
-    function showAnalytics() {
-      document.getElementById('appSection').style.display = 'none';
-      document.getElementById('analyticsSection').style.display = 'block';
-      loadAnalyticsData();
-    }
-    
-    function closeAnalytics() {
-      document.getElementById('analyticsSection').style.display = 'none';
-      document.getElementById('appSection').style.display = 'block';
+    async function updateOrderStatus(orderId, itemCode, status) {
+      document.getElementById(`row-${orderId}-${itemCode}`).style.opacity = '0.5';
+      const payload = { action: 'update_order_status', updates: [{ orderId, itemCode, newStatus: status }] };
+      try {
+        const res = await fetch(GAS_API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json());
+        if(res.status === 'success') { document.getElementById(`row-${orderId}-${itemCode}`).style.display = 'none'; showToast(`Item ${status}`); }
+      } catch(e) { alert("Failed to update."); document.getElementById(`row-${orderId}-${itemCode}`).style.opacity = '1'; }
     }
 
+    // ANALYTICS
     async function loadAnalyticsData() {
-      const c = document.getElementById('analyticsContainer');
-      c.innerHTML = '<div class="loading-text">Crunching global financial data...</div>';
-      
+      const c = document.getElementById('analyticsContainer'); c.innerHTML = '<div class="loading-text">Crunching global financial data...</div>';
       try {
         const res = await fetch(GAS_API_URL + "?action=get_analytics").then(r => r.json());
         if(res.status === 'success') {
-          let maxLoss = Math.max(...Object.values(res.branchStats));
-          if(maxLoss === 0) maxLoss = 1; // prevent divide by zero
-          
+          let maxLoss = Math.max(...Object.values(res.branchStats)); if(maxLoss === 0) maxLoss = 1; 
           let branchBars = '';
           for (const [branch, loss] of Object.entries(res.branchStats)) {
             let width = (loss / maxLoss) * 100;
-            branchBars += `
-              <div class="chart-row">
-                <div class="chart-label-bar"><span>${branch.replace('BIANCA ','')}</span><span>฿${loss.toLocaleString()}</span></div>
-                <div class="chart-track"><div class="chart-fill" style="width: ${width}%;"></div></div>
-              </div>
-            `;
+            branchBars += `<div class="chart-row"><div class="chart-label-bar"><span>${branch.replace('BIANCA ','')}</span><span>฿${loss.toLocaleString()}</span></div><div class="chart-track"><div class="chart-fill" style="width: ${width}%;"></div></div></div>`;
           }
-
-          let topItemsHtml = res.topOffenders.map((i, index) => `
-            <div class="top-offender-card">
-              <div style="display:flex; gap:12px; align-items:center;">
-                <div style="font-size:18px; font-weight:800; color:var(--border-dashed);">#${index+1}</div>
-                <div><div class="offender-name">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:700;">COST: ฿${i.cost.toLocaleString()}</div></div>
-              </div>
-              <div class="offender-qty">${i.qty} Broken</div>
-            </div>
-          `).join('');
-
-          c.innerHTML = `
-            <div class="stat-hero">฿${res.totalLoss.toLocaleString()}</div>
-            <p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">Total Company Wastage Cost</p>
-            
-            <h3 style="font-size:15px; margin-bottom:16px;">Branch Comparison</h3>
-            <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">
-              ${branchBars}
-            </div>
-
-            <h3 style="font-size:15px; margin-bottom:16px;">Top Broken Items</h3>
-            ${topItemsHtml || '<div class="loading-text">No breakage reported yet.</div>'}
-          `;
+          let topItemsHtml = res.topOffenders.map((i, idx) => `<div class="top-offender-card"><div style="display:flex; gap:12px; align-items:center;"><div style="font-size:18px; font-weight:800; color:var(--border-dashed);">#${idx+1}</div><div><div style="font-size:14px; font-weight:700;">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:700;">COST: ฿${i.cost.toLocaleString()}</div></div></div><div style="font-size:14px; font-weight:700; color:var(--red); background:var(--red-soft); padding:4px 10px; border-radius:6px;">${i.qty} Broken</div></div>`).join('');
+          c.innerHTML = `<div class="stat-hero">฿${res.totalLoss.toLocaleString()}</div><p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">Total Company Wastage Cost</p><h3 style="font-size:15px; margin-bottom:16px;">Branch Comparison</h3><div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">${branchBars}</div><h3 style="font-size:15px; margin-bottom:16px;">Top Broken Items</h3>${topItemsHtml}`;
         }
       } catch(err) { c.innerHTML = '<div class="loading-text" style="color:var(--red);">Network Error.</div>'; }
     }
