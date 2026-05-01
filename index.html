@@ -4,126 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>LOVA — Enterprise Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Cascadia+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* GLOBAL VARIABLES & STANDARDS */
+    /* GLOBAL DESIGN TOKENS */
     :root { 
-      --bg: #f0eee6; --surface: #ffffff; --input-bg: #f4f3f0; 
-      --border: #e4e2da; --border-dashed: #dcd9d0;
+      --bg: #f0eee6; 
+      --surface: #ffffff; 
+      --input-bg: #f4f3f0; 
+      --border: #e4e2da; 
+      --border-dashed: #dcd9d0;
+      
       --navy: #1a1f2e; 
       --green: #166534; --green-soft: #dcfce7; --green-border: #86efac;
       --red: #d93025; --red-soft: #fdf0ef; --red-border: #f5c6c2;
       --orange: #b45309; --orange-soft: #fef3c7; --orange-border: #fde68a;
-      --text-main: #1a1a1a; --text-muted: #737373; --text-kicker: #8c8c8c;
       
-      --radius-sm: 8px; --radius-md: 12px; --radius-pill: 24px;
-      --h-input: 48px; --h-btn: 52px;
+      --text-main: #1a1a1a; 
+      --text-muted: #737373; 
+      --text-kicker: #8c8c8c;
+      
+      --font-ui: 'Sora', sans-serif;
+      --font-data: 'Cascadia Mono', monospace;
+
+      --radius-sm: 8px; 
+      --radius-md: 12px; 
+      --radius-pill: 24px;
+      --h-input: 48px; 
+      --h-btn: 52px;
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif;}
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-ui); -webkit-font-smoothing: antialiased;}
     body { background: var(--bg); min-height: 100vh; padding-bottom: 140px; color: var(--text-main); -webkit-tap-highlight-color: transparent;}
+    
+    /* TYPOGRAPHY HELPERS */
+    .font-data { font-family: var(--font-data); }
+    h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; color: var(--navy); }
     
     /* TOP NAVIGATION */
     .top-nav { background: var(--navy); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
     .nav-left { display: flex; align-items: baseline; gap: 8px; }
-    .nav-wordmark { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 1.5px; }
-    .nav-tag { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
+    .nav-wordmark { font-family: var(--font-ui); font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 1.5px; }
+    .nav-tag { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
     .nav-right { display: flex; align-items: center; gap: 16px; }
-    .nav-user { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px;}
+    .nav-user { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px;}
     .btn-logout { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;}
     .btn-logout:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
     
     /* CORE LAYOUT */
     .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
     .header-area { display: flex; flex-direction: column; align-items: center; margin: 40px 0 32px 0; text-align: center; }
-    h2 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 8px; color: var(--text-main);}
-    p.subtitle { color: var(--text-muted); font-size: 15px; font-weight: 500; }
+    .header-area h2 { font-size: 32px; margin-bottom: 8px; }
+    p.subtitle { color: var(--text-muted); font-size: 14px; font-weight: 400; }
 
     /* AUTHENTICATION VIEW */
-    #authSection { text-align: center; max-width: 380px; margin: 15vh auto; border-radius: var(--radius-md); padding: 48px 32px; background: var(--surface); box-shadow: 0 12px 40px rgba(0,0,0,0.04); }
-    #passcode { width: 100%; text-align: center; font-size: 32px; letter-spacing: 16px; text-indent: 16px; font-weight: 700; padding: 12px; background: var(--input-bg); border: 2px solid var(--border); margin-bottom: 20px; border-radius: var(--radius-md); height: 64px; color: var(--text-main); outline: none; transition: 0.2s;}
+    #authSection { text-align: center; max-width: 380px; margin: 15vh auto; border-radius: var(--radius-md); padding: 48px 32px; background: var(--surface); box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
+    #passcode { width: 100%; text-align: center; font-size: 28px; letter-spacing: 12px; text-indent: 12px; font-weight: 600; padding: 12px; background: var(--input-bg); border: 1px solid var(--border); margin-bottom: 20px; border-radius: var(--radius-md); height: 64px; color: var(--navy); font-family: var(--font-data); outline: none; transition: 0.2s;}
     #passcode:focus { border-color: var(--navy); }
     #authError { color: var(--red); font-size: 13px; display: none; margin-top: 12px; font-weight: 600;}
 
-    /* PERFECTED LOGIN BUTTON */
-    .btn-submit { max-width: 760px; width: 100%; height: var(--h-btn); background: var(--navy); color: #ffffff !important; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; margin: 0 auto;}
+    /* GLOBAL BUTTONS */
+    .btn-submit { max-width: 760px; width: 100%; height: var(--h-btn); background: var(--navy); color: #ffffff !important; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; margin: 0 auto;}
     .btn-submit:active { transform: scale(0.98); }
     .btn-submit:disabled { opacity: 0.8; cursor: not-allowed; background: var(--navy) !important; color: #ffffff !important; }
+    .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); width: 100%; height: var(--h-btn); border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+    .btn-secondary:hover { background: var(--surface); }
+    .btn-back { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: 0.2s; display: inline-flex;}
+    .btn-back:hover { background: var(--surface); color: var(--text-main); }
 
     /* HUB MENU */
     #hubSection, #ledgerSection, #requestSection, #approvalSection, #analyticsSection, #sharedNav { display: none; }
     .menu-grid { display: grid; gap: 12px; margin-top: 32px; }
-    .menu-btn { height: 76px; background: var(--surface); color: var(--text-main); border: 1px solid var(--border); font-size: 15px; font-weight: 600; display: flex; align-items: center; padding-left: 20px; border-radius: 10px; cursor: pointer; transition: 0.2s;}
+    .menu-btn { height: 76px; background: var(--surface); color: var(--text-main); border: 1px solid var(--border); font-size: 15px; font-weight: 600; display: flex; align-items: center; padding-left: 20px; border-radius: 10px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
     .menu-btn:hover { border-color: var(--navy); transform: translateY(-2px);}
     .menu-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--input-bg); display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 16px;}
 
     /* ROUTING GRID & SEARCH */
     .flat-routing { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr); gap: 32px 64px; margin-bottom: 40px; }
     .routing-col { display: flex; flex-direction: column; justify-content: flex-end; position: relative;}
-    .routing-label { font-size: 11px; color: var(--text-kicker); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;}
-    .routing-select, .routing-input { font-size: 16px; font-weight: 600; color: var(--text-main); background: transparent; border: none; outline: none; padding: 0 20px 8px 0; width: 100%; height: 36px; border-bottom: 1px dashed var(--border-dashed); transition: 0.2s;}
+    .routing-label { font-size: 11px; color: var(--text-kicker); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;}
+    .routing-select, .routing-input { font-size: 15px; font-weight: 400; color: var(--text-main); background: transparent; border: none; outline: none; padding: 0 20px 8px 0; width: 100%; height: 36px; border-bottom: 1px dashed var(--border-dashed); transition: 0.2s;}
     .routing-select { cursor: pointer; color: var(--navy); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%231a1f2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'); background-repeat: no-repeat; background-position: right 0px center; }
     .routing-input:focus, .routing-select:focus, .routing-select:hover { border-color: var(--navy); }
 
-    .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-top: 8px; z-index: 50; max-height: 250px; overflow-y: auto; box-shadow: 0 12px 32px rgba(0,0,0,0.08); display: none;}
+    .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-top: 8px; z-index: 50; max-height: 250px; overflow-y: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.06); display: none;}
     .search-item { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid var(--input-bg); }
     .search-item:hover { background: var(--bg); }
     .search-item img { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border);}
     .search-item-text { font-size: 14px; font-weight: 600; }
 
-    /* CARD COMPONENTS */
+    /* PREVIEW & STAGING CARDS */
     .selected-preview { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 40px; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,0.03); flex-wrap: wrap;}
     .selected-preview img { width: 56px; height: 56px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border);}
-    .preview-name { font-size: 16px; font-weight: 700; flex: 1; min-width: 200px;}
-    .qty-input { width: 88px; height: var(--h-input); text-align: center; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 18px; font-weight: 700; background-color: var(--input-bg); color: var(--navy); outline: none; transition: 0.2s;}
+    .preview-name { font-size: 15px; font-weight: 600; flex: 1; min-width: 200px;}
+    .qty-input { width: 88px; height: var(--h-input); text-align: center; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 18px; font-weight: 600; background-color: var(--input-bg); color: var(--navy); font-family: var(--font-data); outline: none; transition: 0.2s;}
     .qty-input:focus { background-color: var(--surface); border-color: var(--border-dashed); box-shadow: 0 0 0 3px rgba(26,31,46,0.04); }
-    .btn-add { background: var(--navy); color: #fff; border: none; height: var(--h-input); border-radius: var(--radius-sm); font-weight: 700; font-size: 14px; padding: 0 32px; cursor: pointer; transition: 0.2s;}
+    .btn-add { background: var(--navy); color: #fff; border: none; height: var(--h-input); border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; padding: 0 32px; cursor: pointer; transition: 0.2s;}
     .btn-add:active { transform: scale(0.96); }
 
-    /* UNIFIED STAGING AREA STYLES */
-    .section-pill-text { font-size: 14px; font-weight: 600; text-transform: uppercase; margin: 32px 0 12px 0; color: var(--text-main); letter-spacing: 0.5px;}
-    .section-pill-white { display: inline-block; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--navy); margin-bottom: 16px; margin-top: 16px; text-transform: uppercase;}
+    .section-pill-text { font-size: 13px; font-weight: 600; text-transform: uppercase; margin: 32px 0 12px 0; color: var(--text-main); letter-spacing: 0.5px;}
+    .section-pill-white { display: inline-block; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: var(--navy); margin-bottom: 16px; margin-top: 16px; text-transform: uppercase;}
 
     .staged-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
-    .staged-indicator { width: 36px; height: 36px; min-width:36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; border: 1px solid transparent;}
+    .staged-indicator { width: 36px; height: 36px; min-width:36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; border: 1px solid transparent;}
     .indicator-minus { background: var(--red-soft); color: var(--red); border-color: var(--red-border); }
     .indicator-plus { background: var(--green-soft); color: var(--green); border-color: var(--green-border); }
-    .indicator-cart { background: var(--navy); color: white; border-color: var(--navy); font-size: 16px; border-radius: 8px !important;}
+    .indicator-cart { background: var(--navy); color: white; border-color: var(--navy); font-size: 16px;}
     .indicator-audit { background: var(--input-bg); color: var(--navy); border-color: var(--border); font-size: 14px;}
     
     .staged-thumb { width: 48px; height: 48px; min-width:48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); background: var(--input-bg);}
     .staged-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-    .staged-name { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.2;}
-    .staged-meta { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;}
+    .staged-name { font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.2;}
+    .staged-meta { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;}
     
-    /* Data Pills */
-    .data-pill { display: flex; align-items: baseline; gap: 4px; background: var(--navy); padding: 6px 14px; border-radius: var(--radius-sm); color: white; font-size: 16px; font-weight: 800;}
-    .data-pill-light { display: flex; align-items: baseline; gap: 4px; background: var(--input-bg); padding: 6px 14px; border-radius: var(--radius-sm); color: var(--navy); font-size: 16px; font-weight: 800;}
+    .data-pill { display: flex; align-items: baseline; gap: 4px; background: var(--navy); padding: 6px 14px; border-radius: var(--radius-sm); color: white; font-size: 15px; font-weight: 600; font-family: var(--font-data);}
+    .data-pill-light { display: flex; align-items: baseline; gap: 4px; background: var(--input-bg); padding: 6px 14px; border-radius: var(--radius-sm); color: var(--navy); font-size: 15px; font-weight: 600; font-family: var(--font-data);}
     
     .btn-remove { color: var(--text-kicker); font-size: 20px; background: transparent; border: none; cursor: pointer; padding: 4px 8px; }
     .btn-remove:hover { color: var(--red); }
 
     /* ORDER APPROVAL CARDS */
-    .order-batch { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.03);}
+    .order-batch { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.02);}
     .batch-head { padding: 16px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;}
-    .batch-id { font-size: 15px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;}
-    .batch-meta { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 4px;}
+    .batch-id { font-size: 14px; font-weight: 600; font-family: var(--font-data); color: var(--navy);}
+    .batch-meta { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 4px;}
     .order-item-row { padding: 16px 20px; border-bottom: 1px solid var(--input-bg); display: flex; gap: 16px; align-items: center;}
     .order-item-row:last-child { border-bottom: none;}
-    .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-left: 8px;}
+    .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; margin-left: 8px;}
     .status-pending { background: var(--orange-soft); color: var(--orange); border: 1px solid var(--orange-border); }
     
-    /* Ghost Buttons */
-    .btn-ghost-approve { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--green-border); color: var(--green); background: transparent; transition: 0.2s;}
+    .btn-ghost-approve { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid var(--green-border); color: var(--green); background: transparent; transition: 0.2s;}
     .btn-ghost-approve:hover { background: var(--green-soft); }
-    .btn-ghost-reject { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid var(--red-border); color: var(--red); background: transparent; transition: 0.2s;}
+    .btn-ghost-reject { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid var(--red-border); color: var(--red); background: transparent; transition: 0.2s;}
     .btn-ghost-reject:hover { background: var(--red-soft); }
 
     /* STICKY BOTTOM */
-    .sticky-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(244,243,240,0.95); backdrop-filter: blur(12px); padding: 20px 24px 32px; border-top: 1px solid var(--border); z-index: 100; display: flex; flex-direction: column; align-items: center;}
+    .sticky-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(240,238,230,0.95); backdrop-filter: blur(12px); padding: 20px 24px 32px; border-top: 1px solid var(--border); z-index: 100; display: flex; flex-direction: column; align-items: center;}
     .grand-total-bar { width: 100%; max-width: 760px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 4px;}
-    .grand-total-label { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
-    .grand-total-value { font-size: 24px; font-weight: 700; color: var(--navy); font-family: 'Playfair Display', serif;}
+    .grand-total-label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;}
+    .grand-total-value { font-size: 24px; font-weight: 600; color: var(--navy); font-family: var(--font-data);}
 
     /* MODALS & ALERTS */
     .modal-overlay { position: fixed; inset: 0; background: rgba(26,31,46,0.6); display: flex; align-items: flex-end; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px);}
@@ -132,23 +152,34 @@
     .modal-overlay.open .modal-sheet { transform: translateY(0); }
     .modal-list { overflow-y: auto; flex: 1; padding-right: 4px; padding-bottom: 24px;}
     
-    /* UTILITIES */
-    .loading-text { text-align: center; color: var(--text-muted); font-size: 15px; margin-top: 40px; padding: 40px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); font-weight: 600;}
-    .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); width: 100%; height: var(--h-btn); border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s;}
-    .btn-secondary:hover { background: var(--surface); }
-    .btn-back { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: 0.2s; display: inline-flex;}
-    .btn-back:hover { background: var(--surface); color: var(--text-main); }
-    
-    .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--navy); color: white; padding: 14px 28px; border-radius: 30px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1000; box-shadow: 0 8px 24px rgba(26,31,46,0.3);}
+    .loading-text { text-align: center; color: var(--text-muted); font-size: 14px; margin-top: 40px; padding: 40px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); font-weight: 600;}
+    .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--navy); color: white; padding: 14px 28px; border-radius: 30px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1000; box-shadow: 0 8px 24px rgba(26,31,46,0.3); letter-spacing: 0.5px;}
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ANALYTICS CSS */
-    .stat-hero { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--navy); margin: 16px 0 32px 0; text-align: center;}
+    .stat-hero { font-family: var(--font-data); font-size: 42px; font-weight: 600; color: var(--navy); margin: 16px 0 32px 0; text-align: center;}
     .chart-row { margin-bottom: 16px; }
-    .chart-label-bar { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px;}
+    .chart-label-bar { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 8px;}
     .chart-track { width: 100%; height: 16px; background: var(--input-bg); border-radius: 8px; overflow: hidden;}
     .chart-fill { height: 100%; background: var(--red); border-radius: 8px;}
     .top-offender-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;}
+
+    /* ADMIN BRANCH SELECTOR UI */
+    .admin-branch-select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      font-family: var(--font-ui);
+      cursor: pointer;
+      outline: none;
+      margin-top: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .admin-branch-select:hover { border-color: var(--navy); }
 
     @media (max-width: 650px) { .flat-routing { grid-template-columns: 1fr; gap: 24px; } }
   </style>
@@ -163,9 +194,9 @@
 
   <!-- LOGIN MODULE -->
   <div id="authSection" class="container" style="display: block;">
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 20px auto; display: block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    <h2>Ledger Access</h2>
-    <p class="subtitle" style="margin-bottom: 32px;">Enter PIN to securely access your branch</p>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 20px auto; display: block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    <h2>System Access</h2>
+    <p class="subtitle" style="margin-bottom: 32px;">Enter PIN to securely access the portal</p>
     <input type="password" id="passcode" maxlength="4" placeholder="••••" autocomplete="off" onkeypress="handleEnter(event)" inputmode="numeric">
     <p id="authError">Incorrect PIN. Please try again.</p>
     <button onclick="authenticate()" class="btn-submit" id="loginBtn">Secure Login</button>
@@ -187,7 +218,11 @@
 
   <!-- LEDGER MODULE (Wastage / Intake) -->
   <div id="ledgerSection" class="container">
-    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Ledger Entry</h2><p class="subtitle" id="ledgerBranchSubtitle">Location: HQ</p></div>
+    <div class="header-area">
+      <button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button>
+      <h2>Ledger Entry</h2>
+      <div id="ledgerBranchSubtitle" class="subtitle">Location: HQ</div>
+    </div>
     <div class="flat-routing">
       <div class="routing-col">
         <label class="routing-label">Section</label>
@@ -210,14 +245,18 @@
     </div>
     <div id="stagingArea" style="margin-bottom: 24px;"></div>
     <div class="sticky-bottom">
-      <div class="grand-total-bar"><div class="grand-total-label">Items in Batch</div><div class="grand-total-value" id="batchCountDisplay">0</div></div>
+      <div class="grand-total-bar"><div class="grand-total-label">Items in Batch</div><div class="grand-total-value font-data" id="batchCountDisplay">0</div></div>
       <button type="button" class="btn-submit" onclick="openSummaryModal('ledger')">Review & Submit Ledger</button>
     </div>
   </div>
 
   <!-- PROCUREMENT REQUEST MODULE -->
   <div id="requestSection" class="container">
-    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Request Items</h2><p class="subtitle">Procurement authorization.</p></div>
+    <div class="header-area">
+      <button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button>
+      <h2>Request Items</h2>
+      <div id="requestBranchSubtitle" class="subtitle">Procurement authorization.</div>
+    </div>
     <div class="flat-routing">
       <div class="routing-col">
         <label class="routing-label">Section</label>
@@ -234,13 +273,13 @@
         <img id="reqSelPic" src=""><div class="preview-name" id="reqSelName">Item Name</div>
         <input type="number" id="reqSelQty" class="qty-input" placeholder="QTY">
       </div>
-      <input type="text" id="reqReason" class="routing-input" placeholder="Required: Reason for order..." style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-weight: 500; height: auto;">
+      <input type="text" id="reqReason" class="routing-input" placeholder="Required: Reason for order..." style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 8px; height: auto;">
       <button class="btn-add" style="width: 100%;" onclick="stageItem('request')">ADD TO CART</button>
     </div>
     <div id="reqStagingArea" style="margin-bottom: 24px;"></div>
     <div class="sticky-bottom">
-      <div class="grand-total-bar"><div class="grand-total-label">Cart Items</div><div class="grand-total-value" id="reqBatchCountDisplay">0</div></div>
-      <button type="button" class="btn-submit" onclick="openSummaryModal('request')">Review & Send Request</button>
+      <div class="grand-total-bar"><div class="grand-total-label">Cart Items</div><div class="grand-total-value font-data" id="reqBatchCountDisplay">0</div></div>
+      <button type="button" class="btn-submit" style="background: var(--navy);" onclick="openSummaryModal('request')">Review & Send Request</button>
     </div>
   </div>
 
@@ -248,7 +287,6 @@
   <div id="approvalSection" class="container">
     <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Approval Center</h2><p class="subtitle">Review pending requests.</p></div>
     
-    <!-- Dynamic Filters -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
       <select id="filterBranch" class="routing-select" style="width: 100%;" onchange="loadApprovals()"><option value="ALL">All Branches</option></select>
       <select id="filterSection" class="routing-select" style="width: 100%;" onchange="loadApprovals()">
@@ -268,8 +306,8 @@
   <!-- SUMMARY MODAL (Used for both Ledger & Requests) -->
   <div class="modal-overlay" id="summaryModal">
     <div class="modal-sheet">
-      <h2 style="font-size: 28px; margin-bottom: 4px;">Confirm Batch</h2>
-      <p class="subtitle">Please verify before submitting.</p>
+      <h2 style="font-size: 24px; margin-bottom: 4px;">Confirm Batch</h2>
+      <p class="subtitle" id="summaryModalSubtitle">Please verify before submitting.</p>
       <div class="modal-list" id="summaryContainer"></div>
       <div style="display: flex; gap: 16px; margin-top: 16px;">
         <button class="btn-secondary" style="flex: 1;" onclick="closeSummaryModal()">Cancel</button>
@@ -282,8 +320,14 @@
 
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxPRS-2xn5jSxgxqSCeR-q-tYRabyzK_mjt9d2C9IEc_CLQDDL_Cu0zS3AWrJcguzdM/exec"; 
-    let currentUser = null; let masterInventory = []; let stagedItems = []; let reqStagedItems = []; let activeSelection = null; 
+    
+    let currentUser = null; 
+    let masterInventory = []; 
+    let stagedItems = []; 
+    let reqStagedItems = []; 
+    let activeSelection = null; 
     let currentMode = 'ledger'; 
+    let targetBranch = ""; 
 
     function handleEnter(e) { if(e.key === 'Enter') authenticate(); }
     function showToast(msg) { const t = document.getElementById('sysToast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
@@ -295,31 +339,63 @@
       if(viewId === 'analyticsSection') loadAnalyticsData();
     }
 
+    function updateTargetBranch(val) {
+      targetBranch = val;
+      document.querySelectorAll('.admin-branch-select').forEach(el => el.value = val);
+    }
+
     async function authenticate() {
       const pin = document.getElementById('passcode').value.trim();
       const btn = document.getElementById('loginBtn');
       if(pin.length !== 4) return;
-      btn.disabled = true; btn.innerText = "Authenticating..."; 
+      btn.disabled = true; btn.innerText = "Authenticating securely..."; 
       try {
-        const res = await fetch(GAS_API_URL + "?action=get_users").then(r => r.json());
+        const res = await fetch(GAS_API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'secure_login', pin: pin })
+        }).then(r => r.json());
+
         if (res.status === 'success') {
-          const user = res.data.find(u => u.PIN_Code == pin && u.Status === 'Active');
-          if (user) {
-            currentUser = { name: user.Name, branch: user.Branch_Name, role: user.Role };
-            document.getElementById('displayUser').innerText = `${user.Name} • ${user.Branch_Name}`;
-            document.getElementById('hubBranchName').innerText = user.Branch_Name;
-            document.getElementById('ledgerBranchSubtitle').innerText = `Location: ${user.Branch_Name}`;
+          currentUser = res.user;
+          targetBranch = currentUser.branch;
+
+          document.getElementById('displayUser').innerText = `${currentUser.name} • ${currentUser.branch}`;
+          document.getElementById('hubBranchName').innerText = currentUser.branch;
+          
+          if(currentUser.role === 'Admin' || currentUser.branch === 'HQ') {
+            document.getElementById('adminApprovalBtn').style.display = 'flex';
+            document.getElementById('transType').innerHTML = `<option value="WASTAGE">- Report Broken</option><option value="RESTOCK">+ Stock Intake</option><option value="STOCKTAKE">⟳ Full Audit / Reset</option>`;
             
-            if(user.Role === 'Admin') {
-              document.getElementById('adminApprovalBtn').style.display = 'flex';
-              document.getElementById('transType').innerHTML = `<option value="WASTAGE">- Report Broken</option><option value="RESTOCK">+ Stock Intake</option><option value="STOCKTAKE">⟳ Full Audit / Reset</option>`;
-            }
-            document.getElementById('authSection').style.display = 'none';
-            document.getElementById('sharedNav').style.display = 'flex';
-            openView('hubSection'); fetchMaster(); 
-          } else document.getElementById('authError').style.display = 'block';
+            const selectHTML = `
+              <select class="admin-branch-select" onchange="updateTargetBranch(this.value)">
+                <option value="BIANCA SIAM PARAGON">Bianca Siam Paragon</option>
+                <option value="BIANCA EMSPHERE">Bianca Emsphere</option>
+                <option value="BIANCA ONE BANGKOK">Bianca One Bangkok</option>
+                <option value="BIANCA ICONSIAM">Bianca Iconsiam</option>
+                <option value="BIANCA TERMINAL 21">Bianca Terminal 21</option>
+                <option value="HOLYBELLY">Holybelly</option>
+              </select>
+            `;
+            document.getElementById('ledgerBranchSubtitle').innerHTML = selectHTML;
+            document.getElementById('requestBranchSubtitle').innerHTML = selectHTML;
+            
+            if(currentUser.branch === 'HQ') targetBranch = "BIANCA SIAM PARAGON";
+            document.querySelectorAll('.admin-branch-select').forEach(el => el.value = targetBranch);
+
+          } else {
+            document.getElementById('ledgerBranchSubtitle').innerText = `Location: ${currentUser.branch}`;
+            document.getElementById('requestBranchSubtitle').innerText = `Location: ${currentUser.branch}`;
+          }
+          
+          document.getElementById('authSection').style.display = 'none';
+          document.getElementById('sharedNav').style.display = 'flex';
+          openView('hubSection'); fetchMaster(); 
+        } else {
+          document.getElementById('authError').innerText = "Invalid PIN.";
+          document.getElementById('authError').style.display = 'block';
         }
-      } catch (err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Secure Login"; document.getElementById('passcode').value = ''; }
+      } catch (err) { document.getElementById('authError').innerText = "Network Error."; document.getElementById('authError').style.display = 'block'; } 
+      finally { btn.disabled = false; btn.innerText = "Secure Login"; document.getElementById('passcode').value = ''; }
     }
 
     function logout() { location.reload(); }
@@ -329,7 +405,6 @@
       if(res.status === 'success') masterInventory = res.data; 
     }
 
-    // SEARCH LOGIC
     function handleSearch(inputId, sectionId, dropId) {
       const query = document.getElementById(inputId).value.toLowerCase();
       const section = document.getElementById(sectionId).value;
@@ -376,7 +451,6 @@
       }
     }
 
-    // UNIFIED CARD RENDERING FOR STAGING
     function renderStagingArea(mode) {
       const arr = mode === 'ledger' ? stagedItems : reqStagedItems;
       const containerId = mode === 'ledger' ? 'stagingArea' : 'reqStagingArea';
@@ -392,9 +466,8 @@
           const idx = arr.indexOf(item);
           if(mode === 'ledger') {
             let icon = (item.transType === 'WASTAGE' ? '<div class="staged-indicator indicator-minus">-</div>' : (item.transType === 'RESTOCK' ? '<div class="staged-indicator indicator-plus">+</div>' : '<div class="staged-indicator indicator-audit">⟳</div>'));
-            html += `<div class="staged-card">${icon}<img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb"><div class="staged-info"><div class="staged-name">${item.ITEM_NAME}</div><div class="staged-meta">${item.transLabel}</div></div><div class="data-pill">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7);">${item.UNIT}</span></div><button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button></div>`;
+            html += `<div class="staged-card">${icon}<img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb"><div class="staged-info"><div class="staged-name">${item.ITEM_NAME}</div><div class="staged-meta">${item.transLabel}</div></div><div class="data-pill">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7); font-family:var(--font-ui);">${item.UNIT}</span></div><button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button></div>`;
           } else {
-            // Request Mode uses cleaner styling based on screenshot
             html += `<div class="staged-card" style="padding:12px 16px;">
               <div class="staged-indicator indicator-cart">🛒</div>
               <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb">
@@ -402,7 +475,7 @@
                 <div class="staged-name">${item.ITEM_NAME}</div>
                 <div class="staged-meta" style="color:var(--text-muted);">REASON: ${item.reason.toUpperCase()}</div>
               </div>
-              <div class="data-pill-light">${item.count} <span style="font-size:10px; color:var(--text-muted);">${item.UNIT}</span></div>
+              <div class="data-pill-light">${item.count} <span style="font-size:10px; color:var(--text-muted); font-family:var(--font-ui);">${item.UNIT}</span></div>
               <button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button>
             </div>`;
           }
@@ -413,12 +486,13 @@
 
     function removeStaged(mode, index) { if(mode === 'ledger') stagedItems.splice(index, 1); else reqStagedItems.splice(index, 1); renderStagingArea(mode); }
 
-    // UNIFIED SUMMARY MODAL
     function openSummaryModal(mode) {
       currentMode = mode;
       const arr = mode === 'ledger' ? stagedItems : reqStagedItems;
       if(arr.length === 0) return alert("Batch empty.");
       
+      document.getElementById('summaryModalSubtitle').innerHTML = `Please verify before submitting to <strong>${targetBranch}</strong>.`;
+
       const container = document.getElementById('summaryContainer');
       container.innerHTML = '';
       const sections = [...new Set(arr.map(i => i.SECTION))];
@@ -433,8 +507,8 @@
             <div class="staged-card" style="box-shadow: none; border-color: var(--border); padding: 12px 16px;">
               <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb">
               <div class="staged-name" style="flex: 1;">${item.ITEM_NAME}</div>
-              <div style="font-size: 13px; font-weight: 700; color:var(--text-muted); margin-right: 12px;">${typeStr}</div>
-              <div class="data-pill">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7);">${item.UNIT}</span></div>
+              <div style="font-size: 13px; font-weight: 600; color:var(--text-muted); margin-right: 12px;">${typeStr}</div>
+              <div class="data-pill">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7); font-family:var(--font-ui);">${item.UNIT}</span></div>
             </div>
           `;
         });
@@ -450,18 +524,23 @@
       const arr = currentMode === 'ledger' ? stagedItems : reqStagedItems;
       const act = currentMode === 'ledger' ? 'submit_count' : 'submit_order';
 
-      const payload = { action: act, branch: currentUser.branch, staff: currentUser.name, timestamp: new Date().toISOString(), data: arr.map(i => ({ code: i.CODE, name: i.ITEM_NAME, count: i.count, unit: i.UNIT, section: i.SECTION, transType: i.transType || '', reason: i.reason || '' })) };
+      const payload = { 
+          action: act, 
+          branch: targetBranch, 
+          staff: currentUser.name, 
+          timestamp: new Date().toISOString(), 
+          data: arr.map(i => ({ code: i.CODE, name: i.ITEM_NAME, count: i.count, unit: i.UNIT, section: i.SECTION, transType: i.transType || '', reason: i.reason || '' })) 
+      };
 
       try {
         const res = await fetch(GAS_API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json());
         if(res.status === 'success') { 
-          closeSummaryModal(); showToast(`Success! Logged.`); 
+          closeSummaryModal(); showToast(`Success! Logged to ${targetBranch}.`); 
           if(currentMode === 'ledger') { stagedItems = []; renderStagingArea('ledger'); } else { reqStagedItems = []; renderStagingArea('request'); }
         } else alert("Error: " + res.message);
       } catch(err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Confirm & Send"; }
     }
 
-    // APPROVAL CENTER (Admin)
     async function loadApprovals() {
       const c = document.getElementById('approvalContainer'); c.innerHTML = '<div class="loading-text">Fetching pending orders...</div>';
       const branchFilter = document.getElementById('filterBranch').value;
@@ -472,14 +551,12 @@
         if(res.status === 'success') {
           let pending = res.data.filter(o => o.STATUS === 'PENDING');
           
-          // Populate Branch Filter options dynamically if first time
           const selectBranch = document.getElementById('filterBranch');
           if(selectBranch.options.length === 1) {
             const branches = [...new Set(res.data.map(o => o.BRANCH))];
             branches.forEach(b => { if(b) selectBranch.innerHTML += `<option value="${b}">${b}</option>`; });
           }
 
-          // Apply Filters
           if(branchFilter !== 'ALL') pending = pending.filter(o => o.BRANCH === branchFilter);
           if(sectionFilter !== 'ALL') pending = pending.filter(o => o.SECTION === sectionFilter);
 
@@ -494,7 +571,6 @@
               </div>`;
             
             items.forEach(req => {
-              // Cross-reference master inventory to get the image URL dynamically
               const masterRef = masterInventory.find(m => m.CODE === req.ITEM_CODE);
               const photoUrl = masterRef ? masterRef.URL : 'https://via.placeholder.com/48';
 
@@ -502,10 +578,10 @@
                 <div class="order-item-row" id="row-${id}-${req.ITEM_CODE}">
                   <img src="${photoUrl}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border);">
                   <div style="flex:1;">
-                    <div style="font-weight:700; font-size:15px; margin-bottom:4px; display:flex; align-items:center;">
+                    <div style="font-weight:600; font-size:15px; margin-bottom:4px; display:flex; align-items:center;">
                       ${req.ITEM_NAME} <span class="status-badge status-pending">PENDING</span>
                     </div>
-                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Req: <span style="font-weight:800; color:var(--navy);">${req.QTY} ${req.UNIT}</span></div>
+                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Req: <span style="font-weight:600; color:var(--navy); font-family:var(--font-data);">${req.QTY} <span style="font-family:var(--font-ui); font-size:11px;">${req.UNIT}</span></span></div>
                     <div style="font-size:12px; font-style:italic;">"${req.REASON}"</div>
                   </div>
                   <div style="display:flex; flex-direction:column; gap:8px;">
@@ -540,10 +616,10 @@
           let branchBars = '';
           for (const [branch, loss] of Object.entries(res.branchStats)) {
             let width = (loss / maxLoss) * 100;
-            branchBars += `<div class="chart-row"><div class="chart-label-bar"><span>${branch.replace('BIANCA ','')}</span><span>฿${loss.toLocaleString()}</span></div><div class="chart-track"><div class="chart-fill" style="width: ${width}%;"></div></div></div>`;
+            branchBars += `<div class="chart-row"><div class="chart-label-bar"><span>${branch.replace('BIANCA ','')}</span><span class="font-data">฿${loss.toLocaleString()}</span></div><div class="chart-track"><div class="chart-fill" style="width: ${width}%;"></div></div></div>`;
           }
-          let topItemsHtml = res.topOffenders.map((i, idx) => `<div class="top-offender-card"><div style="display:flex; gap:12px; align-items:center;"><div style="font-size:18px; font-weight:800; color:var(--border-dashed);">#${idx+1}</div><div><div style="font-size:14px; font-weight:700;">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:700;">COST: ฿${i.cost.toLocaleString()}</div></div></div><div style="font-size:14px; font-weight:700; color:var(--red); background:var(--red-soft); padding:4px 10px; border-radius:6px;">${i.qty} Broken</div></div>`).join('');
-          c.innerHTML = `<div class="stat-hero">฿${res.totalLoss.toLocaleString()}</div><p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">Total Company Wastage Cost</p><h3 style="font-size:15px; margin-bottom:16px;">Branch Comparison</h3><div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">${branchBars}</div><h3 style="font-size:15px; margin-bottom:16px;">Top Broken Items</h3>${topItemsHtml}`;
+          let topItemsHtml = res.topOffenders.map((i, idx) => `<div class="top-offender-card"><div style="display:flex; gap:12px; align-items:center;"><div style="font-size:18px; font-weight:600; color:var(--border-dashed); font-family:var(--font-data);">#${idx+1}</div><div><div style="font-size:14px; font-weight:600;">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:600;">COST: <span class="font-data">฿${i.cost.toLocaleString()}</span></div></div></div><div style="font-size:13px; font-weight:600; color:var(--red); background:var(--red-soft); padding:4px 10px; border-radius:6px;"><span class="font-data">${i.qty}</span> Broken</div></div>`).join('');
+          c.innerHTML = `<div class="stat-hero font-data">฿${res.totalLoss.toLocaleString()}</div><p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">Total Company Wastage Cost</p><h3 style="font-size:15px; margin-bottom:16px;">Branch Comparison</h3><div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">${branchBars}</div><h3 style="font-size:15px; margin-bottom:16px;">Top Broken Items</h3>${topItemsHtml}`;
         }
       } catch(err) { c.innerHTML = '<div class="loading-text" style="color:var(--red);">Network Error.</div>'; }
     }
