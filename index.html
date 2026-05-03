@@ -48,6 +48,14 @@
     .nav-wordmark { font-family: var(--font-ui); font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 1.5px; }
     .nav-tag { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
     .nav-right { display: flex; align-items: center; gap: 16px; }
+    
+    /* Language Toggle Styles */
+    .lang-toggle { display: flex; gap: 8px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.4); margin-right: 8px; }
+    .lang-btn { cursor: pointer; transition: 0.2s; }
+    .lang-btn.active { color: #fff; }
+    .lang-btn:hover { color: rgba(255,255,255,0.8); }
+    .lang-divider { color: rgba(255,255,255,0.2); }
+
     .nav-user { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px;}
     .btn-logout { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;}
     .btn-logout:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
@@ -189,51 +197,66 @@
   <!-- TOP NAVIGATION -->
   <nav class="top-nav" id="sharedNav">
     <div class="nav-left"><div class="nav-wordmark">LOVA</div><div class="nav-tag">Enterprise</div></div>
-    <div class="nav-right"><div class="nav-user" id="displayUser"></div><button class="btn-logout" onclick="logout()">Logout</button></div>
+    <div class="nav-right">
+      <!-- Minimalist Language Toggle -->
+      <div class="lang-toggle">
+        <span class="lang-btn active" id="langEn" onclick="setLang('en')">EN</span>
+        <span class="lang-divider">|</span>
+        <span class="lang-btn" id="langTh" onclick="setLang('th')">TH</span>
+      </div>
+      <div class="nav-user" id="displayUser"></div>
+      <button class="btn-logout" onclick="logout()" data-i18n="nav_logout">Logout</button>
+    </div>
   </nav>
 
   <!-- LOGIN MODULE -->
   <div id="authSection" class="container" style="display: block;">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 20px auto; display: block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    <h2>System Access</h2>
-    <p class="subtitle" style="margin-bottom: 32px;">Enter PIN to securely access the portal</p>
+    <h2 data-i18n="login_title">System Access</h2>
+    <p class="subtitle" style="margin-bottom: 32px;" data-i18n="login_sub">Enter PIN to securely access the portal</p>
     <input type="password" id="passcode" maxlength="4" placeholder="••••" autocomplete="off" onkeypress="handleEnter(event)" inputmode="numeric">
-    <p id="authError">Incorrect PIN. Please try again.</p>
-    <button onclick="authenticate()" class="btn-submit" id="loginBtn">Secure Login</button>
+    <p id="authError" data-i18n="login_error">Incorrect PIN. Please try again.</p>
+    <button onclick="authenticate()" class="btn-submit" id="loginBtn" data-i18n="login_btn">Secure Login</button>
   </div>
 
   <!-- HUB MENU -->
   <div id="hubSection" class="container">
     <div class="header-area">
-      <h2>LOVA Hub</h2>
+      <h2 data-i18n="hub_title">LOVA Hub</h2>
       <p class="subtitle" id="hubBranchName">Location</p>
     </div>
     <div class="menu-grid">
-      <button class="menu-btn" onclick="openView('requestSection')"><div class="menu-icon">🛒</div> Request Procurement</button>
-      <button class="menu-btn" onclick="openView('ledgerSection')"><div class="menu-icon">⚡</div> Live Ledger (Stock/Wastage)</button>
-      <button class="menu-btn" onclick="openView('analyticsSection')"><div class="menu-icon">📊</div> Global Analytics</button>
-      <button class="menu-btn" id="adminApprovalBtn" style="display: none; border-color: var(--navy);" onclick="openView('approvalSection')"><div class="menu-icon">📝</div> Admin: Approval Center</button>
+      <button class="menu-btn" onclick="openView('requestSection')"><div class="menu-icon">🛒</div> <span data-i18n="menu_req">Request Procurement</span></button>
+      <button class="menu-btn" onclick="openView('ledgerSection')"><div class="menu-icon">⚡</div> <span data-i18n="menu_ledger">Live Ledger (Stock/Wastage)</span></button>
+      <button class="menu-btn" onclick="openView('analyticsSection')"><div class="menu-icon">📊</div> <span data-i18n="menu_analytics">Global Analytics</span></button>
+      <button class="menu-btn" id="adminApprovalBtn" style="display: none; border-color: var(--navy);" onclick="openView('approvalSection')"><div class="menu-icon">📝</div> <span data-i18n="menu_admin">Admin: Approval Center</span></button>
     </div>
   </div>
 
   <!-- LEDGER MODULE (Wastage / Intake) -->
   <div id="ledgerSection" class="container">
     <div class="header-area">
-      <button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button>
-      <h2>Ledger Entry</h2>
+      <button class="btn-back" onclick="openView('hubSection')" data-i18n="btn_back">← Back to Hub</button>
+      <h2 data-i18n="ledger_title">Ledger Entry</h2>
       <div id="ledgerBranchSubtitle" class="subtitle">Location: HQ</div>
     </div>
     <div class="flat-routing">
       <div class="routing-col">
-        <label class="routing-label">Section</label>
-        <select id="logSection" class="routing-select" onchange="clearSelection()"><option value="KITCHEN">Kitchen</option><option value="BAR">Bar</option><option value="SERVICE">Service</option></select>
+        <label class="routing-label" data-i18n="lbl_section">Section</label>
+        <select id="logSection" class="routing-select" onchange="clearSelection()">
+          <option value="KITCHEN" data-i18n="opt_kitchen">Kitchen</option>
+          <option value="BAR" data-i18n="opt_bar">Bar</option>
+          <option value="SERVICE" data-i18n="opt_service">Service</option>
+        </select>
       </div>
       <div class="routing-col">
-        <label class="routing-label">Transaction</label>
-        <select id="transType" class="routing-select"><option value="WASTAGE">- Report Broken</option></select>
+        <label class="routing-label" data-i18n="lbl_trans">Transaction</label>
+        <select id="transType" class="routing-select">
+          <option value="WASTAGE" data-i18n="opt_waste">- Report Broken</option>
+        </select>
       </div>
       <div class="routing-col" style="grid-column: 1 / -1;">
-        <label class="routing-label">Item Search</label>
+        <label class="routing-label" data-i18n="lbl_search">Item Search</label>
         <input type="text" id="itemSearch" class="routing-input" placeholder="Search exact item..." onkeyup="handleSearch('itemSearch', 'logSection', 'searchDropdown')" autocomplete="off">
         <div id="searchDropdown" class="search-dropdown"></div>
       </div>
@@ -241,29 +264,33 @@
     <div id="selectedPreview" class="selected-preview" style="display: none;">
       <img id="selPic" src=""><div class="preview-name" id="selName">Item Name</div>
       <input type="number" id="selQty" class="qty-input" placeholder="QTY">
-      <button class="btn-add" onclick="stageItem('ledger')">ADD</button>
+      <button class="btn-add" onclick="stageItem('ledger')" data-i18n="btn_add">ADD</button>
     </div>
     <div id="stagingArea" style="margin-bottom: 24px;"></div>
     <div class="sticky-bottom">
-      <div class="grand-total-bar"><div class="grand-total-label">Items in Batch</div><div class="grand-total-value font-data" id="batchCountDisplay">0</div></div>
-      <button type="button" class="btn-submit" onclick="openSummaryModal('ledger')">Review & Submit Ledger</button>
+      <div class="grand-total-bar"><div class="grand-total-label" data-i18n="lbl_batch">Items in Batch</div><div class="grand-total-value font-data" id="batchCountDisplay">0</div></div>
+      <button type="button" class="btn-submit" onclick="openSummaryModal('ledger')" data-i18n="btn_submit_ledger">Review & Submit Ledger</button>
     </div>
   </div>
 
   <!-- PROCUREMENT REQUEST MODULE -->
   <div id="requestSection" class="container">
     <div class="header-area">
-      <button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button>
-      <h2>Request Items</h2>
-      <div id="requestBranchSubtitle" class="subtitle">Procurement authorization.</div>
+      <button class="btn-back" onclick="openView('hubSection')" data-i18n="btn_back">← Back to Hub</button>
+      <h2 data-i18n="req_title">Request Items</h2>
+      <div id="requestBranchSubtitle" class="subtitle" data-i18n="req_sub">Procurement authorization.</div>
     </div>
     <div class="flat-routing">
       <div class="routing-col">
-        <label class="routing-label">Section</label>
-        <select id="reqSection" class="routing-select" onchange="clearReqSelection()"><option value="KITCHEN">Kitchen</option><option value="BAR">Bar</option><option value="SERVICE">Service</option></select>
+        <label class="routing-label" data-i18n="lbl_section">Section</label>
+        <select id="reqSection" class="routing-select" onchange="clearReqSelection()">
+          <option value="KITCHEN" data-i18n="opt_kitchen">Kitchen</option>
+          <option value="BAR" data-i18n="opt_bar">Bar</option>
+          <option value="SERVICE" data-i18n="opt_service">Service</option>
+        </select>
       </div>
       <div class="routing-col" style="grid-column: 1 / -1;">
-        <label class="routing-label">Item Search</label>
+        <label class="routing-label" data-i18n="lbl_search">Item Search</label>
         <input type="text" id="reqItemSearch" class="routing-input" placeholder="Search catalog..." onkeyup="handleSearch('reqItemSearch', 'reqSection', 'reqSearchDropdown')" autocomplete="off">
         <div id="reqSearchDropdown" class="search-dropdown"></div>
       </div>
@@ -274,44 +301,51 @@
         <input type="number" id="reqSelQty" class="qty-input" placeholder="QTY">
       </div>
       <input type="text" id="reqReason" class="routing-input" placeholder="Required: Reason for order..." style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 8px; height: auto;">
-      <button class="btn-add" style="width: 100%;" onclick="stageItem('request')">ADD TO CART</button>
+      <button class="btn-add" style="width: 100%;" onclick="stageItem('request')" data-i18n="btn_add_cart">ADD TO CART</button>
     </div>
     <div id="reqStagingArea" style="margin-bottom: 24px;"></div>
     <div class="sticky-bottom">
-      <div class="grand-total-bar"><div class="grand-total-label">Cart Items</div><div class="grand-total-value font-data" id="reqBatchCountDisplay">0</div></div>
-      <button type="button" class="btn-submit" style="background: var(--navy);" onclick="openSummaryModal('request')">Review & Send Request</button>
+      <div class="grand-total-bar"><div class="grand-total-label" data-i18n="lbl_cart">Cart Items</div><div class="grand-total-value font-data" id="reqBatchCountDisplay">0</div></div>
+      <button type="button" class="btn-submit" style="background: var(--navy);" onclick="openSummaryModal('request')" data-i18n="btn_submit_req">Review & Send Request</button>
     </div>
   </div>
 
   <!-- ADMIN APPROVAL CENTER -->
   <div id="approvalSection" class="container">
-    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Approval Center</h2><p class="subtitle">Review pending requests.</p></div>
+    <div class="header-area">
+      <button class="btn-back" onclick="openView('hubSection')" data-i18n="btn_back">← Back to Hub</button>
+      <h2 data-i18n="admin_title">Approval Center</h2>
+      <p class="subtitle" data-i18n="admin_sub">Review pending requests.</p>
+    </div>
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
-      <select id="filterBranch" class="routing-select" style="width: 100%;" onchange="loadApprovals()"><option value="ALL">All Branches</option></select>
+      <select id="filterBranch" class="routing-select" style="width: 100%;" onchange="loadApprovals()"><option value="ALL" data-i18n="filter_all_br">All Branches</option></select>
       <select id="filterSection" class="routing-select" style="width: 100%;" onchange="loadApprovals()">
-        <option value="ALL">All Sections</option><option value="KITCHEN">Kitchen</option><option value="BAR">Bar</option><option value="SERVICE">Service</option><option value="CASHIER">Cashier</option>
+        <option value="ALL" data-i18n="filter_all_sec">All Sections</option>
+        <option value="KITCHEN" data-i18n="opt_kitchen">Kitchen</option>
+        <option value="BAR" data-i18n="opt_bar">Bar</option>
+        <option value="SERVICE" data-i18n="opt_service">Service</option>
       </select>
     </div>
 
-    <div id="approvalContainer"><div class="loading-text">Loading Orders...</div></div>
+    <div id="approvalContainer"><div class="loading-text" data-i18n="loading_orders">Loading Orders...</div></div>
   </div>
 
   <!-- ANALYTICS DASHBOARD -->
   <div id="analyticsSection" class="container">
-    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')">← Back to Hub</button><h2>Global Analytics</h2></div>
-    <div id="analyticsContainer"><div class="loading-text">Loading Data...</div></div>
+    <div class="header-area"><button class="btn-back" onclick="openView('hubSection')" data-i18n="btn_back">← Back to Hub</button><h2 data-i18n="analytics_title">Global Analytics</h2></div>
+    <div id="analyticsContainer"><div class="loading-text" data-i18n="loading_data">Loading Data...</div></div>
   </div>
 
-  <!-- SUMMARY MODAL (Used for both Ledger & Requests) -->
+  <!-- SUMMARY MODAL -->
   <div class="modal-overlay" id="summaryModal">
     <div class="modal-sheet">
-      <h2 style="font-size: 24px; margin-bottom: 4px;">Confirm Batch</h2>
-      <p class="subtitle" id="summaryModalSubtitle">Please verify before submitting.</p>
+      <h2 style="font-size: 24px; margin-bottom: 4px;" data-i18n="modal_title">Confirm Batch</h2>
+      <p class="subtitle" id="summaryModalSubtitle" data-i18n="modal_sub">Please verify before submitting.</p>
       <div class="modal-list" id="summaryContainer"></div>
       <div style="display: flex; gap: 16px; margin-top: 16px;">
-        <button class="btn-secondary" style="flex: 1;" onclick="closeSummaryModal()">Cancel</button>
-        <button class="btn-submit" id="finalPushBtn" style="flex: 2; background: var(--green);" onclick="executePush()">Confirm & Send</button>
+        <button class="btn-secondary" style="flex: 1;" onclick="closeSummaryModal()" data-i18n="btn_cancel">Cancel</button>
+        <button class="btn-submit" id="finalPushBtn" style="flex: 2; background: var(--green);" onclick="executePush()" data-i18n="btn_confirm">Confirm & Send</button>
       </div>
     </div>
   </div>
@@ -328,6 +362,68 @@
     let activeSelection = null; 
     let currentMode = 'ledger'; 
     let targetBranch = ""; 
+    let currentLang = 'en';
+
+    // --- DICTIONARY ---
+    const dict = {
+      en: {
+        nav_logout: "Logout",
+        login_title: "System Access", login_sub: "Enter PIN to securely access the portal", login_error: "Incorrect PIN. Please try again.", login_btn: "Secure Login",
+        hub_title: "LOVA Hub", menu_req: "Request Procurement", menu_ledger: "Live Ledger (Stock/Wastage)", menu_analytics: "Global Analytics", menu_admin: "Admin: Approval Center",
+        btn_back: "← Back to Hub", ledger_title: "Ledger Entry", lbl_section: "Section", lbl_trans: "Transaction", lbl_search: "Item Search", 
+        opt_kitchen: "Kitchen", opt_bar: "Bar", opt_service: "Service", opt_waste: "- Report Broken",
+        btn_add: "ADD", lbl_batch: "Items in Batch", btn_submit_ledger: "Review & Submit Ledger",
+        req_title: "Request Items", req_sub: "Procurement authorization.", btn_add_cart: "ADD TO CART", lbl_cart: "Cart Items", btn_submit_req: "Review & Send Request",
+        admin_title: "Approval Center", admin_sub: "Review pending requests.", filter_all_br: "All Branches", filter_all_sec: "All Sections", loading_orders: "Loading Orders...",
+        analytics_title: "Global Analytics", loading_data: "Loading Data...",
+        modal_title: "Confirm Batch", modal_sub: "Please verify before submitting.", btn_cancel: "Cancel", btn_confirm: "Confirm & Send",
+        search_placeholder: "Search exact item...", req_reason_placeholder: "Required: Reason for order...",
+        auth_loading: "Authenticating securely...", status_pending: "PENDING", btn_approve: "Approve", btn_reject: "Reject"
+      },
+      th: {
+        nav_logout: "ออกจากระบบ",
+        login_title: "เข้าสู่ระบบ", login_sub: "กรุณาใส่รหัส PIN 4 หลัก", login_error: "รหัส PIN ไม่ถูกต้อง", login_btn: "เข้าสู่ระบบ",
+        hub_title: "LOVA Hub", menu_req: "เบิกของ / สั่งของ", menu_ledger: "จัดการสต็อก / ตัดของเสีย", menu_analytics: "ภาพรวมข้อมูลสต็อกบริษัท", menu_admin: "อนุมัติการเบิกสินค้า",
+        btn_back: "← กลับหน้าหลัก", ledger_title: "บันทึกสต็อก", lbl_section: "แผนก", lbl_trans: "ประเภทรายการ", lbl_search: "ค้นหารายการ", 
+        opt_kitchen: "ครัว", opt_bar: "บาร์", opt_service: "งานบริการ", opt_waste: "- บันทึกของเสีย / แตก",
+        btn_add: "เพิ่ม", lbl_batch: "จำนวนรายการ", btn_submit_ledger: "ตรวจสอบและบันทึก",
+        req_title: "เบิกสินค้า", req_sub: "ระบบอนุมัติการเบิก", btn_add_cart: "ใส่ตะกร้า", lbl_cart: "รายการในตะกร้า", btn_submit_req: "ตรวจสอบและส่งคำขอ",
+        admin_title: "อนุมัติการเบิกสินค้า", admin_sub: "ตรวจสอบคำขอที่รออนุมัติ", filter_all_br: "ทุกสาขา", filter_all_sec: "ทุกแผนก", loading_orders: "กำลังโหลดข้อมูล...",
+        analytics_title: "ภาพรวมข้อมูลสต็อกบริษัท", loading_data: "กำลังโหลดข้อมูล...",
+        modal_title: "ยืนยันรายการ", modal_sub: "โปรดตรวจสอบความถูกต้องก่อนยืนยัน", btn_cancel: "ยกเลิก", btn_confirm: "ยืนยันและส่ง",
+        search_placeholder: "พิมพ์ชื่อเพื่อค้นหา...", req_reason_placeholder: "โปรดระบุเหตุผลการเบิก...",
+        auth_loading: "กำลังตรวจสอบข้อมูล...", status_pending: "รออนุมัติ", btn_approve: "อนุมัติ", btn_reject: "ปฏิเสธ"
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('langEn').classList.toggle('active', lang === 'en');
+      document.getElementById('langTh').classList.toggle('active', lang === 'th');
+      
+      // Translate text content
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[lang][key]) el.innerText = dict[lang][key];
+      });
+
+      // Translate placeholders
+      document.getElementById('itemSearch').placeholder = dict[lang].search_placeholder;
+      document.getElementById('reqItemSearch').placeholder = dict[lang].search_placeholder;
+      document.getElementById('reqReason').placeholder = dict[lang].req_reason_placeholder;
+      
+      // Update dynamic Admin dropdown if it exists
+      const transSelect = document.getElementById('transType');
+      if (currentUser && (currentUser.role === 'Admin' || currentUser.branch === 'HQ')) {
+        transSelect.innerHTML = `<option value="WASTAGE">${lang==='th'?'- บันทึกของเสีย / แตก':'- Report Broken'}</option><option value="RESTOCK">${lang==='th'?'+ รับของเข้า':'+ Stock Intake'}</option><option value="STOCKTAKE">${lang==='th'?'⟳ นับสต็อกประจำเดือน':'⟳ Full Audit / Reset'}</option>`;
+      } else {
+        transSelect.innerHTML = `<option value="WASTAGE">${lang==='th'?'- บันทึกของเสีย / แตก':'- Report Broken'}</option>`;
+      }
+      
+      // Re-render areas to catch inner JS translations if active
+      if(stagedItems.length > 0 || reqStagedItems.length > 0) renderStagingArea(currentMode);
+      if(document.getElementById('approvalSection').style.display === 'block') loadApprovals();
+    }
 
     function handleEnter(e) { if(e.key === 'Enter') authenticate(); }
     function showToast(msg) { const t = document.getElementById('sysToast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
@@ -348,7 +444,7 @@
       const pin = document.getElementById('passcode').value.trim();
       const btn = document.getElementById('loginBtn');
       if(pin.length !== 4) return;
-      btn.disabled = true; btn.innerText = "Authenticating securely..."; 
+      btn.disabled = true; btn.innerText = dict[currentLang].auth_loading; 
       try {
         const res = await fetch(GAS_API_URL, {
           method: 'POST',
@@ -364,7 +460,7 @@
           
           if(currentUser.role === 'Admin' || currentUser.branch === 'HQ') {
             document.getElementById('adminApprovalBtn').style.display = 'flex';
-            document.getElementById('transType').innerHTML = `<option value="WASTAGE">- Report Broken</option><option value="RESTOCK">+ Stock Intake</option><option value="STOCKTAKE">⟳ Full Audit / Reset</option>`;
+            setLang(currentLang); // Forces the admin transaction dropdown to build
             
             const selectHTML = `
               <select class="admin-branch-select" onchange="updateTargetBranch(this.value)">
@@ -383,19 +479,19 @@
             document.querySelectorAll('.admin-branch-select').forEach(el => el.value = targetBranch);
 
           } else {
-            document.getElementById('ledgerBranchSubtitle').innerText = `Location: ${currentUser.branch}`;
-            document.getElementById('requestBranchSubtitle').innerText = `Location: ${currentUser.branch}`;
+            document.getElementById('ledgerBranchSubtitle').innerText = currentUser.branch;
+            document.getElementById('requestBranchSubtitle').innerText = currentUser.branch;
           }
           
           document.getElementById('authSection').style.display = 'none';
           document.getElementById('sharedNav').style.display = 'flex';
           openView('hubSection'); fetchMaster(); 
         } else {
-          document.getElementById('authError').innerText = "Invalid PIN.";
+          document.getElementById('authError').innerText = dict[currentLang].login_error;
           document.getElementById('authError').style.display = 'block';
         }
       } catch (err) { document.getElementById('authError').innerText = "Network Error."; document.getElementById('authError').style.display = 'block'; } 
-      finally { btn.disabled = false; btn.innerText = "Secure Login"; document.getElementById('passcode').value = ''; }
+      finally { btn.disabled = false; btn.innerText = dict[currentLang].login_btn; document.getElementById('passcode').value = ''; }
     }
 
     function logout() { location.reload(); }
@@ -436,7 +532,7 @@
       if(!activeSelection) return;
       const qtyId = mode === 'ledger' ? 'selQty' : 'reqSelQty';
       const qty = parseFloat(document.getElementById(qtyId).value);
-      if(!qty || qty <= 0) return alert("Enter valid qty.");
+      if(!qty || qty <= 0) return;
 
       if(mode === 'ledger') {
         const tType = document.getElementById('transType').value;
@@ -445,7 +541,7 @@
         clearSelection(); renderStagingArea('ledger');
       } else {
         const reason = document.getElementById('reqReason').value.trim();
-        if(!reason) return alert("Reason is required for procurement requests.");
+        if(!reason) return;
         reqStagedItems.push({ ...activeSelection, reason: reason, count: qty });
         clearReqSelection(); document.getElementById('reqReason').value = ''; renderStagingArea('request');
       }
@@ -461,19 +557,25 @@
 
       const sections = [...new Set(arr.map(i => i.SECTION))];
       sections.forEach(sec => {
-        let html = `<div class="section-pill-text">${sec}</div>`;
+        let secLabel = sec;
+        if(currentLang==='th') {
+           if(sec==='KITCHEN') secLabel='ครัว'; else if(sec==='BAR') secLabel='บาร์'; else if(sec==='SERVICE') secLabel='งานบริการ';
+        }
+        let html = `<div class="section-pill-text">${secLabel}</div>`;
+        
         arr.filter(i => i.SECTION === sec).forEach((item) => {
           const idx = arr.indexOf(item);
           if(mode === 'ledger') {
             let icon = (item.transType === 'WASTAGE' ? '<div class="staged-indicator indicator-minus">-</div>' : (item.transType === 'RESTOCK' ? '<div class="staged-indicator indicator-plus">+</div>' : '<div class="staged-indicator indicator-audit">⟳</div>'));
             html += `<div class="staged-card">${icon}<img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb"><div class="staged-info"><div class="staged-name">${item.ITEM_NAME}</div><div class="staged-meta">${item.transLabel}</div></div><div class="data-pill">${item.count} <span style="font-size:10px; color:rgba(255,255,255,0.7); font-family:var(--font-ui);">${item.UNIT}</span></div><button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button></div>`;
           } else {
+            let reasonLbl = currentLang === 'th' ? 'เหตุผล: ' : 'REASON: ';
             html += `<div class="staged-card" style="padding:12px 16px;">
               <div class="staged-indicator indicator-cart">🛒</div>
               <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb">
               <div class="staged-info">
                 <div class="staged-name">${item.ITEM_NAME}</div>
-                <div class="staged-meta" style="color:var(--text-muted);">REASON: ${item.reason.toUpperCase()}</div>
+                <div class="staged-meta" style="color:var(--text-muted);">${reasonLbl}${item.reason.toUpperCase()}</div>
               </div>
               <div class="data-pill-light">${item.count} <span style="font-size:10px; color:var(--text-muted); font-family:var(--font-ui);">${item.UNIT}</span></div>
               <button class="btn-remove" onclick="removeStaged('${mode}', ${idx})">✕</button>
@@ -489,20 +591,26 @@
     function openSummaryModal(mode) {
       currentMode = mode;
       const arr = mode === 'ledger' ? stagedItems : reqStagedItems;
-      if(arr.length === 0) return alert("Batch empty.");
+      if(arr.length === 0) return;
       
-      document.getElementById('summaryModalSubtitle').innerHTML = `Please verify before submitting to <strong>${targetBranch}</strong>.`;
+      let subMsg = currentLang === 'en' ? `Please verify before submitting to <strong>${targetBranch}</strong>.` : `โปรดตรวจสอบความถูกต้องก่อนส่งข้อมูลไปยัง <strong>${targetBranch}</strong>`;
+      document.getElementById('summaryModalSubtitle').innerHTML = subMsg;
 
       const container = document.getElementById('summaryContainer');
       container.innerHTML = '';
       const sections = [...new Set(arr.map(i => i.SECTION))];
       
       sections.forEach(sec => {
+        let secLabel = sec;
+        if(currentLang==='th') {
+           if(sec==='KITCHEN') secLabel='ครัว'; else if(sec==='BAR') secLabel='บาร์'; else if(sec==='SERVICE') secLabel='งานบริการ';
+        }
+        
         const itemsInSection = arr.filter(i => i.SECTION === sec);
-        let html = `<div class="section-pill-white">${sec}</div>`;
+        let html = `<div class="section-pill-white">${secLabel}</div>`;
         
         itemsInSection.forEach(item => {
-          let typeStr = mode === 'ledger' ? (item.transType === 'WASTAGE' ? 'Broken' : (item.transType === 'RESTOCK' ? 'Intake' : 'Audit')) : 'Request';
+          let typeStr = mode === 'ledger' ? (item.transType === 'WASTAGE' ? (currentLang==='th'?'ของเสีย':'Broken') : (item.transType === 'RESTOCK' ? (currentLang==='th'?'รับเข้า':'Intake') : (currentLang==='th'?'นับสต็อก':'Audit'))) : (currentLang==='th'?'คำขอเบิก':'Request');
           html += `
             <div class="staged-card" style="box-shadow: none; border-color: var(--border); padding: 12px 16px;">
               <img src="${item.URL || 'https://via.placeholder.com/48'}" class="staged-thumb">
@@ -520,7 +628,9 @@
     function closeSummaryModal() { document.getElementById('summaryModal').classList.remove('open'); }
 
     async function executePush() {
-      const btn = document.getElementById('finalPushBtn'); btn.disabled = true; btn.innerText = "Encrypting & Sending...";
+      const btn = document.getElementById('finalPushBtn'); btn.disabled = true; 
+      btn.innerText = currentLang === 'th' ? "กำลังบันทึกข้อมูล..." : "Encrypting & Sending...";
+      
       const arr = currentMode === 'ledger' ? stagedItems : reqStagedItems;
       const act = currentMode === 'ledger' ? 'submit_count' : 'submit_order';
 
@@ -535,14 +645,17 @@
       try {
         const res = await fetch(GAS_API_URL, { method: 'POST', body: JSON.stringify(payload) }).then(r => r.json());
         if(res.status === 'success') { 
-          closeSummaryModal(); showToast(`Success! Logged to ${targetBranch}.`); 
+          closeSummaryModal(); 
+          showToast(currentLang === 'th' ? `บันทึกสำเร็จ (${targetBranch})` : `Success! Logged to ${targetBranch}.`); 
           if(currentMode === 'ledger') { stagedItems = []; renderStagingArea('ledger'); } else { reqStagedItems = []; renderStagingArea('request'); }
         } else alert("Error: " + res.message);
-      } catch(err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = "Confirm & Send"; }
+      } catch(err) { alert("Network Error."); } finally { btn.disabled = false; btn.innerText = dict[currentLang].btn_confirm; }
     }
 
     async function loadApprovals() {
-      const c = document.getElementById('approvalContainer'); c.innerHTML = '<div class="loading-text">Fetching pending orders...</div>';
+      const c = document.getElementById('approvalContainer'); 
+      c.innerHTML = `<div class="loading-text">${dict[currentLang].loading_orders}</div>`;
+      
       const branchFilter = document.getElementById('filterBranch').value;
       const sectionFilter = document.getElementById('filterSection').value;
 
@@ -560,7 +673,7 @@
           if(branchFilter !== 'ALL') pending = pending.filter(o => o.BRANCH === branchFilter);
           if(sectionFilter !== 'ALL') pending = pending.filter(o => o.SECTION === sectionFilter);
 
-          if(pending.length === 0) { c.innerHTML = '<div class="loading-text" style="color:var(--green);">No pending orders.</div>'; return; }
+          if(pending.length === 0) { c.innerHTML = `<div class="loading-text" style="color:var(--green);">${currentLang==='th'?'ไม่มีคำขอที่รออนุมัติ':'No pending orders.'}</div>`; return; }
           
           const grouped = {}; pending.forEach(o => { if(!grouped[o.ORDER_ID]) grouped[o.ORDER_ID] = []; grouped[o.ORDER_ID].push(o); });
           let html = '';
@@ -579,14 +692,14 @@
                   <img src="${photoUrl}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border);">
                   <div style="flex:1;">
                     <div style="font-weight:600; font-size:15px; margin-bottom:4px; display:flex; align-items:center;">
-                      ${req.ITEM_NAME} <span class="status-badge status-pending">PENDING</span>
+                      ${req.ITEM_NAME} <span class="status-badge status-pending">${dict[currentLang].status_pending}</span>
                     </div>
                     <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Req: <span style="font-weight:600; color:var(--navy); font-family:var(--font-data);">${req.QTY} <span style="font-family:var(--font-ui); font-size:11px;">${req.UNIT}</span></span></div>
                     <div style="font-size:12px; font-style:italic;">"${req.REASON}"</div>
                   </div>
                   <div style="display:flex; flex-direction:column; gap:8px;">
-                    <button class="btn-ghost-approve" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'APPROVED')">Approve</button>
-                    <button class="btn-ghost-reject" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'REJECTED')">Reject</button>
+                    <button class="btn-ghost-approve" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'APPROVED')">${dict[currentLang].btn_approve}</button>
+                    <button class="btn-ghost-reject" onclick="updateOrderStatus('${id}', '${req.ITEM_CODE}', 'REJECTED')">${dict[currentLang].btn_reject}</button>
                   </div>
                 </div>`;
             });
@@ -606,9 +719,9 @@
       } catch(e) { alert("Failed to update."); document.getElementById(`row-${orderId}-${itemCode}`).style.opacity = '1'; }
     }
 
-    // ANALYTICS
     async function loadAnalyticsData() {
-      const c = document.getElementById('analyticsContainer'); c.innerHTML = '<div class="loading-text">Crunching global financial data...</div>';
+      const c = document.getElementById('analyticsContainer'); 
+      c.innerHTML = `<div class="loading-text">${dict[currentLang].loading_data}</div>`;
       try {
         const res = await fetch(GAS_API_URL + "?action=get_analytics").then(r => r.json());
         if(res.status === 'success') {
@@ -618,11 +731,19 @@
             let width = (loss / maxLoss) * 100;
             branchBars += `<div class="chart-row"><div class="chart-label-bar"><span>${branch.replace('BIANCA ','')}</span><span class="font-data">฿${loss.toLocaleString()}</span></div><div class="chart-track"><div class="chart-fill" style="width: ${width}%;"></div></div></div>`;
           }
-          let topItemsHtml = res.topOffenders.map((i, idx) => `<div class="top-offender-card"><div style="display:flex; gap:12px; align-items:center;"><div style="font-size:18px; font-weight:600; color:var(--border-dashed); font-family:var(--font-data);">#${idx+1}</div><div><div style="font-size:14px; font-weight:600;">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:600;">COST: <span class="font-data">฿${i.cost.toLocaleString()}</span></div></div></div><div style="font-size:13px; font-weight:600; color:var(--red); background:var(--red-soft); padding:4px 10px; border-radius:6px;"><span class="font-data">${i.qty}</span> Broken</div></div>`).join('');
-          c.innerHTML = `<div class="stat-hero font-data">฿${res.totalLoss.toLocaleString()}</div><p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">Total Company Wastage Cost</p><h3 style="font-size:15px; margin-bottom:16px;">Branch Comparison</h3><div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">${branchBars}</div><h3 style="font-size:15px; margin-bottom:16px;">Top Broken Items</h3>${topItemsHtml}`;
+          let topItemsHtml = res.topOffenders.map((i, idx) => `<div class="top-offender-card"><div style="display:flex; gap:12px; align-items:center;"><div style="font-size:18px; font-weight:600; color:var(--border-dashed); font-family:var(--font-data);">#${idx+1}</div><div><div style="font-size:14px; font-weight:600;">${i.name}</div><div style="font-size:11px; color:var(--text-muted); font-weight:600;">COST: <span class="font-data">฿${i.cost.toLocaleString()}</span></div></div></div><div style="font-size:13px; font-weight:600; color:var(--red); background:var(--red-soft); padding:4px 10px; border-radius:6px;"><span class="font-data">${i.qty}</span> ${currentLang==='th'?'ชิ้น':'Broken'}</div></div>`).join('');
+          
+          let subMsg = currentLang === 'th' ? "มูลค่ารวมของเสียบริษัท" : "Total Company Wastage Cost";
+          let compTitle = currentLang === 'th' ? "เปรียบเทียบสาขา" : "Branch Comparison";
+          let topTitle = currentLang === 'th' ? "รายการของเสียสูงสุด" : "Top Broken Items";
+
+          c.innerHTML = `<div class="stat-hero font-data">฿${res.totalLoss.toLocaleString()}</div><p class="subtitle" style="text-align:center; margin-top:-24px; margin-bottom:32px;">${subMsg}</p><h3 style="font-size:15px; margin-bottom:16px;">${compTitle}</h3><div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:32px;">${branchBars}</div><h3 style="font-size:15px; margin-bottom:16px;">${topTitle}</h3>${topItemsHtml}`;
         }
       } catch(err) { c.innerHTML = '<div class="loading-text" style="color:var(--red);">Network Error.</div>'; }
     }
+
+    // Initialize default language
+    setLang('en');
   </script>
 </body>
 </html>
